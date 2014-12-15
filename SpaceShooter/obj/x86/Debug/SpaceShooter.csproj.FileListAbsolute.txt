@@ -26,3 +26,4 @@ C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\obj\x86\Debug\SpaceSho
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Icon.ico
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\ship.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\space.png
+C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\asteroid.png

@@ -21,6 +21,8 @@ namespace SpaceShooter
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         PlayerView playerView;
+        MeteorView meteorView;
+
         private int windowWidth;
         private int windowHeight;
 
@@ -47,8 +49,9 @@ namespace SpaceShooter
             this.windowWidth = GraphicsDevice.Viewport.Width;
             this.windowHeight = GraphicsDevice.Viewport.Height;
 
-            sbv = new SpaceBackgroundView(this.windowWidth, this.windowHeight);
-            playerView = new PlayerView(this.windowWidth, this.windowHeight);
+            this.sbv = new SpaceBackgroundView(this.windowWidth, this.windowHeight);
+            this.meteorView = new MeteorView();
+            this.playerView = new PlayerView(this.windowWidth, this.windowHeight);
             
             base.Initialize();
         }
@@ -61,6 +64,7 @@ namespace SpaceShooter
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.meteorView.LoadContent(Content);
             this.playerView.LoadContent(this.Content);
             this.sbv.LoadContent(Content);
             // TODO: use this.Content to load your game content here
@@ -87,6 +91,7 @@ namespace SpaceShooter
 
             // TODO: Add your update logic here
             this.sbv.Update(gameTime);
+            this.meteorView.Update(gameTime);
             this.playerView.Update(gameTime);
             
             base.Update(gameTime);
@@ -104,6 +109,7 @@ namespace SpaceShooter
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             sbv.Draw(spriteBatch);
+            meteorView.Draw(spriteBatch);
             playerView.Draw(spriteBatch);
             
             spriteBatch.End();

@@ -36,10 +36,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+    <Compile Include="Model\Bullet.cs" />
     <Compile Include="Model\Meteor.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\BulletView.cs" />
     <Compile Include="View\Camera.cs" />
     <Compile Include="View\MeteorView.cs" />
     <Compile Include="View\PlayerView.cs" />
@@ -53,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\asteroid.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\ship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
