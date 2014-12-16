@@ -22,6 +22,7 @@ namespace SpaceShooter
         SpriteBatch spriteBatch;
         PlayerView playerView;
         MeteorView meteorView;
+        //MeteorSimulation meteorSimulation;
 
         private int windowWidth;
         private int windowHeight;
@@ -50,9 +51,11 @@ namespace SpaceShooter
             this.windowHeight = GraphicsDevice.Viewport.Height;
 
             this.sbv = new SpaceBackgroundView(this.windowWidth, this.windowHeight);
-            this.meteorView = new MeteorView();
+            //this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
+            this.meteorView = new MeteorView(this.windowWidth, this.windowHeight);
             this.playerView = new PlayerView(this.windowWidth, this.windowHeight);
             
+
             base.Initialize();
         }
 
@@ -93,7 +96,7 @@ namespace SpaceShooter
             this.sbv.Update(gameTime);
             this.meteorView.Update(gameTime);
             this.playerView.Update(gameTime);
-            
+
             base.Update(gameTime);
 
         }
@@ -111,7 +114,7 @@ namespace SpaceShooter
             sbv.Draw(spriteBatch);
             meteorView.Draw(spriteBatch);
             playerView.Draw(spriteBatch);
-            
+
             spriteBatch.End();
             base.Draw(gameTime);
         }

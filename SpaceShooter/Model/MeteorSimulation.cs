@@ -1,51 +1,43 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceShooter.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SpaceShooter.View
+namespace SpaceShooter.Model
 {
-    public class MeteorView
+    class MeteorSimulation
     {
-        public Texture2D meteorTexture;
+        public Texture2D meteor;
         public Vector2 position;
         public Vector2 origin;
         public float rotation;
-        public float speed;
+        public int speed;
         public bool isColliding;
         public bool isDestroyed;
         public Rectangle meteorHitBox;
         private int width;
         private int height;
-        Meteor meteor;
-        Camera camera;
 
-
-
-        public MeteorView(int width, int height) { 
+        public MeteorSimulation(int width, int height) { 
             //Default värden
-            camera = new Camera(width, height);
-            meteor = new Meteor();
             this.width = width;
             this.height = height;
             this.isColliding = false;
             this.isDestroyed = false;
-            this.position = new Vector2(meteor.Xpos * camera.getScale(), -meteor.Ypos * camera.getScale());
-            this.meteorTexture = null;
-            this.speed = camera.getScale() * meteor.speed;
-
-            
+            this.position = new Vector2(200, -50);
+            this.meteor = null;
+            this.speed = 2;
         }
 
-        public void LoadContent(ContentManager content) {
-            this.meteorTexture = content.Load<Texture2D>("asteroid");
+        public void LoadContent(ContentManager content)
+        {
+            this.meteor = content.Load<Texture2D>("asteroid");
             //Mitten på meteoren
-            this.origin.X = meteorTexture.Width / 2;
-            this.origin.Y = meteorTexture.Height / 2;
+            this.origin.X = meteor.Width / 2;
+            this.origin.Y = meteor.Height / 2;
 
         }
 
@@ -55,7 +47,7 @@ namespace SpaceShooter.View
 
             //Respawnar 50 pixlar utanför kameran ifall meteoren når botten
             this.position.Y = position.Y + speed;
-            if (this.position.Y >= meteor.Ypos * camera.getScale())
+            if (this.position.Y >= 650)
             {
                 Random random = new Random();
                 float randomPos = random.Next(1, width);
@@ -69,21 +61,7 @@ namespace SpaceShooter.View
             this.rotation += elapsed;
             float circle = MathHelper.Pi * 2;
             this.rotation = this.rotation % circle;
-        }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-            if (!this.isDestroyed)
-            {
-
-
-                spriteBatch.Draw(this.meteorTexture, this.position, null, Color.White, this.rotation, this.origin, 1.0f, SpriteEffects.None, 0);
-            }
-        }
 
         }
-
-
     }
-    
-
+}

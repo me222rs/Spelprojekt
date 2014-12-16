@@ -38,7 +38,9 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Model\Bullet.cs" />
     <Compile Include="Model\Meteor.cs" />
+    <Compile Include="Model\MeteorSimulation.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\PlayerSimulation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\BulletView.cs" />
@@ -56,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\asteroid.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\playerbullet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ship.png">
