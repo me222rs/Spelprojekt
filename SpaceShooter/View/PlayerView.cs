@@ -16,6 +16,8 @@ namespace SpaceShooter.View
         private int windowHeight;
         Player player;
         Camera camera;
+        BulletSimulation bulletSimulation;
+        //Bullet bullet;
         public Vector2 position;
         public Texture2D shipTexture;
         public Texture2D bulletTexture;
@@ -30,7 +32,7 @@ namespace SpaceShooter.View
 
         //Skjuta
         public List<Bullet> bulletList;
-        public int bulletDelay = 1;
+        public int bulletDelay = 10;
 
         public PlayerView(int width, int height)
         {
@@ -46,8 +48,10 @@ namespace SpaceShooter.View
             //Skapar instanser av Player och Camera
             this.player = new Player();
             this.camera = new Camera(width, height);
+            //this.bulletSimulation = new BulletSimulation(bulletTexture);
             this.speed = camera.getScale() * player.speed;
             this.diameter = camera.getScale() * player.diameter;
+            
 
             //Hämtar skalan
             //this.scale = camera.getScale();
@@ -64,6 +68,7 @@ namespace SpaceShooter.View
         {
             this.shipTexture = Content.Load<Texture2D>("ship");
             this.bulletTexture = Content.Load<Texture2D>("playerbullet");
+            //bullet = new Bullet(bulletTexture);
         }
 
         public void Update(GameTime gameTime)
@@ -92,6 +97,7 @@ namespace SpaceShooter.View
             {
                 PlayerShoot();
             }
+            UpdateBullet();
 
 
             Vector2 screenposMax;
@@ -125,36 +131,58 @@ namespace SpaceShooter.View
 
         }
 
-        public void PlayerShoot() { 
-            if(bulletDelay >= 0){
+        public void PlayerShoot()
+        {
+            if (bulletDelay >= 0)
+            {
                 bulletDelay--;
             }
-            if(bulletDelay <= 0){
+            if (bulletDelay <= 0)
+            {
                 Bullet newBullet = new Bullet(bulletTexture);
                 newBullet.position = new Vector2(position.X + 32 - newBullet.bullet.Width / 2, position.Y + 30);
                 newBullet.isVisible = true;
-                if(bulletList.Count() < 2000){
+                if (bulletList.Count() < 2000)
+                {
                     bulletList.Add(newBullet);
                 }
             }
 
-            if (bulletDelay == 0) {
-                bulletDelay = 1;
+            if (bulletDelay == 0)
+            {
+                bulletDelay = 10;
             }
         }
 
-        public void UpdateBullet() {
-            foreach (Bullet bullet in bulletList) { 
-                
+        public void UpdateBullet()
+        {
+            foreach (Bullet bullet in bulletList)
+            {
+                bullet.position.Y = bullet.position.Y - bullet.speed;
+
+                if (bullet.position.Y >= 0)
+                {
+                    bullet.isVisible = false;
+                }
+
+                for (int i = 0; i > bulletList.Count; i++)
+                {
+                    if (bulletList[i].isVisible)
+                    {
+                        bulletList.RemoveAt(i);
+                    }
+                }
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch) {
+        public void Draw(SpriteBatch spriteBatch)
+        {
 
             //BulletView bv = new BulletView();
             //spriteBatch.Draw(this.shipTexture, this.position, shipHitBox, Color.White);
             spriteBatch.Draw(this.shipTexture, this.position, Color.White);
-            foreach (Bullet bullet in bulletList) {
+            foreach (Bullet bullet in bulletList)
+            {
                 bullet.Draw(spriteBatch);
             }
         }

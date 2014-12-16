@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="Model\Bullet.cs" />
+    <Compile Include="Model\BulletSimulation.cs" />
     <Compile Include="Model\Meteor.cs" />
     <Compile Include="Model\MeteorSimulation.cs" />
     <Compile Include="Model\Player.cs" />
