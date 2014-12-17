@@ -8,10 +8,14 @@ using System.Text;
 
 namespace SpaceShooter.Model
 {
+    /// <summary>
+    /// Klassen hanterar kollisioner och andra uträkningar som rör spelaren
+    /// </summary>
     class PlayerSimulation
     {
         public List<Bullet> bulletList;
         public int bulletDelay = 1;
+
 
         public Vector2 isCollidingWithBorders(Vector2 v, Vector2 screenposMax) {
             //Kollision med kanterna

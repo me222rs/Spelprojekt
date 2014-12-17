@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooter.Model
 {
+    /// <summary>
+    /// Denna klass är ett objekt av typen kula som även ritar ut kulan(utritning borde ligga i någon vy istället)
+    /// </summary>
     public class Bullet
     {
         public Rectangle bulletHitBox;
@@ -24,7 +27,7 @@ namespace SpaceShooter.Model
             isVisible = false;
 
         }
-
+        //Ritar ut kulorna
         public void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(bullet, position, Color.White);
         }

@@ -10,6 +10,9 @@ using SpaceShooter.View;
 
 namespace SpaceShooter.Model
 {
+    /// <summary>
+    /// Klassen är ett objekt som innehåller information om skeppet/spelaren
+    /// </summary>
     class Player
     {
         //Sets the starting position for the ship

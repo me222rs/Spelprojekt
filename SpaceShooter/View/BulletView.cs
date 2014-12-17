@@ -17,8 +17,8 @@ namespace SpaceShooter.View
         public float speed;
 
 
-        public BulletView() { 
-            
+        public BulletView(Texture2D bullet) {
+            this.bullet = bullet;
         }
 
         public void Draw(SpriteBatch spriteBatch)

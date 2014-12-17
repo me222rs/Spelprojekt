@@ -8,6 +8,9 @@ using System.Text;
 
 namespace SpaceShooter.View
 {
+    /// <summary>
+    /// Ritar ut den rullande bakgrunden, endast för visuella effekter, därför placerat i en vy
+    /// </summary>
     class SpaceBackgroundView
     {
         public Texture2D space;

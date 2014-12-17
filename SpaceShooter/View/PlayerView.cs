@@ -10,6 +10,9 @@ using System.Text;
 
 namespace SpaceShooter.View
 {
+    /// <summary>
+    /// Klassen sköter inmatning och utritning av kula och spelare
+    /// </summary>
     class PlayerView
     {
         private int windowWidth;
@@ -48,14 +51,9 @@ namespace SpaceShooter.View
             //Skapar instanser av Player och Camera
             this.player = new Player();
             this.camera = new Camera(width, height);
-            //this.bulletSimulation = new BulletSimulation(bulletTexture);
+            this.bulletSimulation = new BulletSimulation(bulletTexture);
             this.speed = camera.getScale() * player.speed;
             this.diameter = camera.getScale() * player.diameter;
-            
-
-            //Hämtar skalan
-            //this.scale = camera.getScale();
-            //this.camera.setDimensions(width, height);
 
             //Spelarens position
             this.vx = player.xPos * camera.getScale();
@@ -74,7 +72,7 @@ namespace SpaceShooter.View
         public void Update(GameTime gameTime)
         {
 
-            //Spelets kontroller
+            //Spelets kontroller läses in
             KeyboardState keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Up))
@@ -95,9 +93,12 @@ namespace SpaceShooter.View
             }
             if (keyboardState.IsKeyDown(Keys.Space))
             {
-                PlayerShoot();
+                this.bulletList = bulletSimulation.PlayerShoot(position, this.bulletList, bulletTexture);
+                //PlayerShoot();
             }
-            UpdateBullet();
+
+            this.bulletList = bulletSimulation.UpdateBullet(this.bulletList);
+            //UpdateBullet();
 
 
             Vector2 screenposMax;
@@ -108,71 +109,6 @@ namespace SpaceShooter.View
             this.position = ps.isCollidingWithBorders(this.position, screenposMax);
 
 
-
-            ////Kollision med kanterna
-            //if (this.position.X <= 0.0f)
-            //{
-            //    this.position.X = 0.0f;
-            //}
-            //if (this.position.Y <= 0.0f)
-            //{
-            //    this.position.Y = 0.0f;
-            //}
-            //if (this.position.X >= screenposMax.X)
-            //{
-            //    this.position.X = screenposMax.X;
-            //}
-            //if (this.position.Y >= screenposMax.Y)
-            //{
-            //    this.position.Y = screenposMax.Y;
-            //}
-
-
-
-        }
-
-        public void PlayerShoot()
-        {
-            if (bulletDelay >= 0)
-            {
-                bulletDelay--;
-            }
-            if (bulletDelay <= 0)
-            {
-                Bullet newBullet = new Bullet(bulletTexture);
-                newBullet.position = new Vector2(position.X + 32 - newBullet.bullet.Width / 2, position.Y + 30);
-                newBullet.isVisible = true;
-                if (bulletList.Count() < 2000)
-                {
-                    bulletList.Add(newBullet);
-                }
-            }
-
-            if (bulletDelay == 0)
-            {
-                bulletDelay = 10;
-            }
-        }
-
-        public void UpdateBullet()
-        {
-            foreach (Bullet bullet in bulletList)
-            {
-                bullet.position.Y = bullet.position.Y - bullet.speed;
-
-                if (bullet.position.Y >= 0)
-                {
-                    bullet.isVisible = false;
-                }
-
-                for (int i = 0; i > bulletList.Count; i++)
-                {
-                    if (bulletList[i].isVisible)
-                    {
-                        bulletList.RemoveAt(i);
-                    }
-                }
-            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

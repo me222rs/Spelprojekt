@@ -63,7 +63,7 @@ namespace SpaceShooter.View
                 this.position.X = randomPos;
             }
 
-            //Roterar meteoren
+            //Roterar meteoren endasat för visuell effekt, därför placerat i vyn
             //http://msdn.microsoft.com/en-us/library/bb203869.aspx
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             this.rotation += elapsed;
