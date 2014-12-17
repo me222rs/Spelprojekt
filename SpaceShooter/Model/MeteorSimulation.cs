@@ -20,6 +20,7 @@ namespace SpaceShooter.Model
         public Rectangle meteorHitBox;
         private int width;
         private int height;
+        //public Texture2D meteorTexture;
 
         public MeteorSimulation(int width, int height) { 
             //Default värden
@@ -30,16 +31,17 @@ namespace SpaceShooter.Model
             this.position = new Vector2(200, -50);
             this.meteor = null;
             this.speed = 2;
+            //meteorTexture = null;
         }
 
-        public void LoadContent(ContentManager content)
-        {
-            this.meteor = content.Load<Texture2D>("asteroid");
-            //Mitten på meteoren
-            this.origin.X = meteor.Width / 2;
-            this.origin.Y = meteor.Height / 2;
+        //public void LoadContent(ContentManager content)
+        //{
+        //    this.meteor = content.Load<Texture2D>("asteroid");
+        //    //Mitten på meteoren
+        //    this.origin.X = meteor.Width / 2;
+        //    this.origin.Y = meteor.Height / 2;
 
-        }
+        //}
 
         public void Update(GameTime gameTime)
         {
@@ -63,5 +65,19 @@ namespace SpaceShooter.Model
             this.rotation = this.rotation % circle;
 
         }
+
+        public Vector2 getPosition() {
+            return position;
+        }
+        public Texture2D getTexture() {
+            return meteor;
+        }
+        public float getRotation() {
+            return rotation;
+        }
+        public Vector2 getOrigin() {
+            return origin;
+        }
+
     }
 }

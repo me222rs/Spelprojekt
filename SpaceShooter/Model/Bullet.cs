@@ -22,7 +22,7 @@ namespace SpaceShooter.Model
         public float speed;
 
         public Bullet(Texture2D newBullet) {
-            speed = 10;
+            speed = 5;
             bullet = newBullet;
             isVisible = false;
 

@@ -72,7 +72,9 @@ namespace SpaceShooter.View
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-
+            //Vector2 v = new Vector2();
+            //v.X = meteor.Xpos;
+            //v.Y = meteor.Ypos;
             if (!this.isDestroyed)
             {
 

@@ -25,6 +25,7 @@ namespace SpaceShooter
         BulletView bulletView;
         //MeteorSimulation meteorSimulation;
         PlayerSimulation playerSImulation;
+        MeteorSimulation meteorSimulation;
 
         private int windowWidth;
         private int windowHeight;
@@ -56,6 +57,8 @@ namespace SpaceShooter
             //this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
             this.meteorView = new MeteorView(this.windowWidth, this.windowHeight);
             this.playerView = new PlayerView(this.windowWidth, this.windowHeight);
+            
+            //this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
             //this.playerSImulation = new PlayerSimulation(this.windowWidth, this.windowHeight);
             
             
