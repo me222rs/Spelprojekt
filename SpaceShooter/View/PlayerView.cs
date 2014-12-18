@@ -31,6 +31,7 @@ namespace SpaceShooter.View
         private float vx;
         private float vy;
         private float diameter;
+        BulletView bulletView;
 
 
         //Skjuta
@@ -66,6 +67,7 @@ namespace SpaceShooter.View
         {
             this.shipTexture = Content.Load<Texture2D>("ship");
             this.bulletTexture = Content.Load<Texture2D>("playerbullet");
+            bulletView = new BulletView(bulletTexture);
             //bullet = new Bullet(bulletTexture);
         }
 
@@ -119,7 +121,8 @@ namespace SpaceShooter.View
             spriteBatch.Draw(this.shipTexture, this.position, Color.White);
             foreach (Bullet bullet in bulletList)
             {
-                bullet.Draw(spriteBatch);
+                Vector2 pos = bullet.position;
+                bulletView.Draw(spriteBatch, pos);
             }
         }
     }

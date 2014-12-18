@@ -12,6 +12,5 @@ namespace SpaceShooter.Model
         public float Ypos = 1.5f;
         public float speed = 0.02f;
         public float diameter = 0.1f;
-
     }
 }

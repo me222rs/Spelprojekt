@@ -11,19 +11,16 @@ namespace SpaceShooter.View
     {
         //public Rectangle bulletHitBox;
         public Texture2D bullet;
-        //public Vector2 origin;
-        public Vector2 position;
-        public bool isVisible;
-        public float speed;
+        
 
 
         public BulletView(Texture2D bullet) {
             this.bullet = bullet;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Vector2 pos)
         {
-            spriteBatch.Draw(bullet, position, Color.White);
+            spriteBatch.Draw(bullet, pos, Color.White);
         }
     }
 }

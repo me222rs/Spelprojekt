@@ -34,15 +34,6 @@ namespace SpaceShooter.Model
             //meteorTexture = null;
         }
 
-        //public void LoadContent(ContentManager content)
-        //{
-        //    this.meteor = content.Load<Texture2D>("asteroid");
-        //    //Mitten på meteoren
-        //    this.origin.X = meteor.Width / 2;
-        //    this.origin.Y = meteor.Height / 2;
-
-        //}
-
         public void Update(GameTime gameTime)
         {
             this.meteorHitBox = new Rectangle((int)position.X, (int)position.Y, 45, 45);
