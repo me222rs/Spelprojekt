@@ -21,11 +21,15 @@ namespace SpaceShooter
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         PlayerView playerView;
-        MeteorView meteorView;
+        //MeteorView meteorView;
         BulletView bulletView;
         //MeteorSimulation meteorSimulation;
         PlayerSimulation playerSImulation;
         MeteorSimulation meteorSimulation;
+
+        //lista med meteorer
+        List<MeteorView> meteorList = new List<MeteorView>();
+        Random random = new Random();
 
         private int windowWidth;
         private int windowHeight;
@@ -54,8 +58,8 @@ namespace SpaceShooter
             this.windowHeight = GraphicsDevice.Viewport.Height;
 
             this.sbv = new SpaceBackgroundView(this.windowWidth, this.windowHeight);
-            //this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
-            this.meteorView = new MeteorView(this.windowWidth, this.windowHeight);
+            this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
+            //this.meteorView = new MeteorView(this.windowWidth, this.windowHeight);
             this.playerView = new PlayerView(this.windowWidth, this.windowHeight);
             
             //this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
@@ -74,11 +78,33 @@ namespace SpaceShooter
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            this.meteorView.LoadContent(Content);
+            //this.meteorView.LoadContent(Content);
             this.playerView.LoadContent(this.Content);
             this.sbv.LoadContent(Content);
             //this.playerSImulation.LoadContent(Content);
             // TODO: use this.Content to load your game content here
+        }
+
+        
+        public void LoadMeteors()
+        {
+            int randomY = random.Next(-600, -50);
+            int randomX = random.Next(0, 550);
+
+            if (meteorList.Count < 5)
+            {
+                meteorList.Add(new MeteorView(this.windowWidth, this.windowHeight, Content.Load<Texture2D>("asteroid"), new Vector2(randomX, randomY)));
+            }
+
+            //Rensar listan
+            for (int i = 0; i < meteorList.Count; i++)
+            {
+                if (!meteorList[i].isVisible)
+                {
+                    meteorList.RemoveAt(i);
+                    i--;
+                }
+            }
         }
 
         /// <summary>
@@ -101,8 +127,15 @@ namespace SpaceShooter
                 Exit();
 
             // TODO: Add your update logic here
+            foreach (MeteorView m in meteorList) {
+                m.Update(gameTime);
+            }
+
+            
+
             this.sbv.Update(gameTime);
-            this.meteorView.Update(gameTime);
+            LoadMeteors();
+            this.meteorSimulation.Update(gameTime);
             this.playerView.Update(gameTime);
 
             base.Update(gameTime);
@@ -118,14 +151,23 @@ namespace SpaceShooter
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+
+
             spriteBatch.Begin();
             sbv.Draw(spriteBatch);
-            meteorView.Draw(spriteBatch);
+            foreach (MeteorView mv in meteorList)
+            {
+                mv.Draw(spriteBatch);
+            }
+            //meteorView.Draw(spriteBatch);
             playerView.Draw(spriteBatch);
 
 
             spriteBatch.End();
             base.Draw(gameTime);
         }
+
+
     }
 }

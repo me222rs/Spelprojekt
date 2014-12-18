@@ -24,20 +24,30 @@ namespace SpaceShooter.View
         Meteor meteor;
         Camera camera;
 
+        public bool isVisible;
+        Random random = new Random();
+        public float randomX;
+        public float randomY;
 
 
-        public MeteorView(int width, int height) { 
+
+        public MeteorView(int width, int height, Texture2D newTexture, Vector2 newPosition)
+        { 
             //Default värden
             camera = new Camera(width, height);
             meteor = new Meteor();
             this.width = width;
             this.height = height;
-            this.isColliding = false;
-            this.isDestroyed = false;
             this.position = new Vector2(meteor.Xpos * camera.getScale(), -meteor.Ypos * camera.getScale());
             this.meteorTexture = null;
             this.speed = camera.getScale() * meteor.speed;
 
+            meteorTexture = newTexture;
+            position = newPosition;
+
+            randomX = random.Next(0, 450);
+            randomY = random.Next(-600, -50);
+            isVisible = true;
             
         }
 
@@ -72,14 +82,13 @@ namespace SpaceShooter.View
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            //Vector2 v = new Vector2();
-            //v.X = meteor.Xpos;
-            //v.Y = meteor.Ypos;
-            if (!this.isDestroyed)
+
+            if (this.isVisible)
             {
 
-
+                //spriteBatch.Begin();
                 spriteBatch.Draw(this.meteorTexture, this.position, null, Color.White, this.rotation, this.origin, 1.0f, SpriteEffects.None, 0);
+                //spriteBatch.End();
             }
         }
 

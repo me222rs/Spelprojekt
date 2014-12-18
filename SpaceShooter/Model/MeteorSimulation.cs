@@ -22,15 +22,23 @@ namespace SpaceShooter.Model
         private int height;
         //public Texture2D meteorTexture;
 
+        public bool isVisible;
+        Random random = new Random();
+        public float randomX;
+        public float randomY;
+
         public MeteorSimulation(int width, int height) { 
             //Default värden
             this.width = width;
             this.height = height;
-            this.isColliding = false;
-            this.isDestroyed = false;
-            this.position = new Vector2(200, -50);
-            this.meteor = null;
+            //this.position = new Vector2(200, -50);
+            //this.meteor = null;
             this.speed = 2;
+            //meteor = newTexture;
+            //position = newPosition;
+
+            randomX = random.Next(0, 450);
+            randomY = random.Next(-600, -50);
             //meteorTexture = null;
         }
 
