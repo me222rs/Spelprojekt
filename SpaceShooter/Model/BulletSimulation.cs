@@ -55,6 +55,9 @@ namespace SpaceShooter.Model
         {
             foreach (Bullet bullet in bulletList.ToList())
             {
+                // Träffytan för kulorna
+                bullet.bulletHitBox = new Rectangle((int)bullet.position.X, (int)bullet.position.Y, bullet.bullet.Width, bullet.bullet.Width);
+
                 bullet.position.Y = bullet.position.Y - bullet.speed;
 
                 if (bullet.position.Y <= 0)

@@ -73,12 +73,13 @@ namespace SpaceShooter.View
                 this.position.X = randomPos;
             }
 
-            //Roterar meteoren endasat för visuell effekt, därför placerat i vyn
-            //http://msdn.microsoft.com/en-us/library/bb203869.aspx
-            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.rotation += elapsed;
-            float circle = MathHelper.Pi * 2;
-            this.rotation = this.rotation % circle;
+            ////Roterar meteoren endasat för visuell effekt, därför placerat i vyn
+            ////Roteringen stör kollisionen så jag tar bort roteringen så länge
+            ////http://msdn.microsoft.com/en-us/library/bb203869.aspx
+            //float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //this.rotation += elapsed;
+            //float circle = MathHelper.Pi * 2;
+            //this.rotation = this.rotation % circle;
         }
         public void Draw(SpriteBatch spriteBatch)
         {

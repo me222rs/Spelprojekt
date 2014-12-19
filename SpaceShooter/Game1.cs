@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using SpaceShooter.Model;
 using SpaceShooter.View;
+using System.Linq;
 #endregion
 
 namespace SpaceShooter
@@ -128,7 +129,21 @@ namespace SpaceShooter
 
             // TODO: Add your update logic here
             foreach (MeteorView m in meteorList) {
-                m.Update(gameTime);
+                // Kollar om meteorerna kolliderar med skeppet och i så fall tas meteorerna bort
+                if (m.meteorHitBox.Intersects(playerView.shipHitBox))
+                {
+                    m.isVisible = false;
+                }
+
+                // Kollar om meteorerna kolliderar med kulorna och i så fall tas de bort
+                for (int i = 0; i < playerView.bulletList.Count; i++) {
+                    if (m.meteorHitBox.Intersects(playerView.bulletList[i].bulletHitBox)) {
+                        m.isVisible = false;
+                        playerView.bulletList.ElementAt(i).isVisible = false;
+                    }
+                }
+
+                    m.Update(gameTime);
             }
 
             

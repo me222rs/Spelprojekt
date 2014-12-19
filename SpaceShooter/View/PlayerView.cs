@@ -74,6 +74,9 @@ namespace SpaceShooter.View
         public void Update(GameTime gameTime)
         {
 
+            shipHitBox = new Rectangle((int)position.X, (int)position.Y, shipTexture.Width, shipTexture.Height);
+
+
             //Spelets kontroller läses in
             KeyboardState keyboardState = Keyboard.GetState();
 
