@@ -22,9 +22,13 @@ namespace SpaceShooter.View
         BulletSimulation bulletSimulation;
         //Bullet bullet;
         public Vector2 position;
+        public Vector2 healthBarPosition;
         public Texture2D shipTexture;
         public Texture2D bulletTexture;
+        public Texture2D healthTexture;
         public Rectangle shipHitBox;
+        public Rectangle healthBox;
+        public int health;
         public bool isColliding;
         public float speed;
         public float scale;
@@ -60,6 +64,8 @@ namespace SpaceShooter.View
             this.vx = player.xPos * camera.getScale();
             this.vy = player.yPos * camera.getScale();
             this.position = new Vector2(vx, vy);
+            this.health = 200;
+            this.healthBarPosition = new Vector2(25, 25);
             
         }
 
@@ -67,6 +73,7 @@ namespace SpaceShooter.View
         {
             this.shipTexture = Content.Load<Texture2D>("ship");
             this.bulletTexture = Content.Load<Texture2D>("playerbullet");
+            this.healthTexture = Content.Load<Texture2D>("healthbar");
             bulletView = new BulletView(bulletTexture);
             //bullet = new Bullet(bulletTexture);
         }
@@ -76,7 +83,7 @@ namespace SpaceShooter.View
 
             shipHitBox = new Rectangle((int)position.X, (int)position.Y, shipTexture.Width, shipTexture.Height);
 
-
+            healthBox = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, health, 25);
             //Spelets kontroller läses in
             KeyboardState keyboardState = Keyboard.GetState();
 
@@ -122,6 +129,7 @@ namespace SpaceShooter.View
             //BulletView bv = new BulletView();
             //spriteBatch.Draw(this.shipTexture, this.position, shipHitBox, Color.White);
             spriteBatch.Draw(this.shipTexture, this.position, Color.White);
+            spriteBatch.Draw(this.healthTexture, healthBox, Color.White);
             foreach (Bullet bullet in bulletList)
             {
                 Vector2 pos = bullet.position;

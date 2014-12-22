@@ -46,6 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\BulletView.cs" />
     <Compile Include="View\Camera.cs" />
+    <Compile Include="View\EnemyView.cs" />
     <Compile Include="View\MeteorView.cs" />
     <Compile Include="View\PlayerView.cs" />
     <Compile Include="View\SpaceBackgroundView.cs" />
@@ -59,6 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\asteroid.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\enemyship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\healthbar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\playerbullet.png">
