@@ -47,6 +47,7 @@
     <Compile Include="View\BulletView.cs" />
     <Compile Include="View\Camera.cs" />
     <Compile Include="View\EnemyView.cs" />
+    <Compile Include="View\HeadsUpDisplay.cs" />
     <Compile Include="View\MeteorView.cs" />
     <Compile Include="View\PlayerView.cs" />
     <Compile Include="View\SpaceBackgroundView.cs" />
@@ -83,6 +84,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\MyFont.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

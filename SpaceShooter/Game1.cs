@@ -27,6 +27,7 @@ namespace SpaceShooter
         //MeteorSimulation meteorSimulation;
         PlayerSimulation playerSImulation;
         MeteorSimulation meteorSimulation;
+        HeadsUpDisplay hud = new HeadsUpDisplay();
 
         //lista med meteorer
         List<MeteorView> meteorList = new List<MeteorView>();
@@ -81,6 +82,7 @@ namespace SpaceShooter
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            hud.LoadContent(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //this.meteorView.LoadContent(Content);
             this.playerView.LoadContent(this.Content);
@@ -95,7 +97,7 @@ namespace SpaceShooter
             int randomY = random.Next(-600, -50);
             int randomX = random.Next(0, 550);
 
-            if (meteorList.Count < 5)
+            if (meteorList.Count < 1)
             {
                 meteorList.Add(new MeteorView(this.windowWidth, this.windowHeight, Content.Load<Texture2D>("asteroid"), new Vector2(randomX, randomY)));
             }
@@ -153,6 +155,7 @@ namespace SpaceShooter
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            //Hanerar kollision mellan fiendeskepp och spelarskepp
             foreach (EnemyView ev in enemyList)
             {
                 if (ev.enemyHitBox.Intersects(playerView.shipHitBox))
@@ -161,7 +164,8 @@ namespace SpaceShooter
                     ev.isVisible = false;
                 }
 
-                for (int i = 0; i > ev.bulletList.Count; i++)
+                //Om spelarskeppet kolliderar med en fiendekula
+                for (int i = 0; i < ev.bulletList.Count; i++)
                 {
                     if (playerView.shipHitBox.Intersects(ev.bulletList[i].bulletHitBox))
                     {
@@ -170,6 +174,7 @@ namespace SpaceShooter
                     }
                 }
 
+                //Om spelarkulorna kolliderar med fiendeskepp
                 for (int i = 0; i < playerView.bulletList.Count; i++)
                 {
                     if (playerView.bulletList[i].bulletHitBox.Intersects(ev.enemyHitBox))
@@ -209,6 +214,7 @@ namespace SpaceShooter
                     m.Update(gameTime);
                 }
 
+                hud.Update(gameTime);
 
 
                 this.sbv.Update(gameTime);
@@ -235,6 +241,7 @@ namespace SpaceShooter
 
             spriteBatch.Begin();
             sbv.Draw(spriteBatch);
+            hud.Draw(spriteBatch);
             foreach (MeteorView mv in meteorList)
             {
                 mv.Draw(spriteBatch);
