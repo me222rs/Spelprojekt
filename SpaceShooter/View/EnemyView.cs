@@ -41,6 +41,7 @@ namespace SpaceShooter.View
             enemyHitBox = new Rectangle((int)position.X, (int)position.Y, enemyTexture.Width, enemyTexture.Height);
 
             position.Y += speed;
+            Random randomX = new Random();
 
             if (position.Y == 650) {
                 position.Y = -50;
