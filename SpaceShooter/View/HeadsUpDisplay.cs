@@ -24,6 +24,7 @@ namespace SpaceShooter.View
 
         public Vector2 scorePosition;
         public bool hudIsVisible;
+        public Vector2 hpPosition;
 
         public HeadsUpDisplay() {
             score = 0;
@@ -31,10 +32,10 @@ namespace SpaceShooter.View
             height = 650;
             width = 500;
             spriteFont = null;
-
-            scorePosition = new Vector2(width / 2, 50);
+            hpPosition = new Vector2(0, 25);
+            scorePosition = new Vector2(0, 50);
         }
-
+        
         public void LoadContent(ContentManager Content) {
             spriteFont = Content.Load<SpriteFont>("MyFont");
         }
@@ -43,8 +44,10 @@ namespace SpaceShooter.View
             KeyboardState keyBoard = Keyboard.GetState();
         }
 
-        public void Draw(SpriteBatch spritebatch) {
+        public void Draw(SpriteBatch spritebatch)
+        {
             spritebatch.DrawString(spriteFont, "Score: " + score, scorePosition, Color.White);
+            spritebatch.DrawString(spriteFont, "HP", hpPosition, Color.White);
         }
     }
 }

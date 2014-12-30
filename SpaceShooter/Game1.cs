@@ -179,6 +179,7 @@ namespace SpaceShooter
                 {
                     if (playerView.bulletList[i].bulletHitBox.Intersects(ev.enemyHitBox))
                     {
+                        hud.score += 20;
                         playerView.bulletList[i].isVisible = false;
                         ev.isVisible = false;
                     }
@@ -194,6 +195,7 @@ namespace SpaceShooter
                     // Kollar om meteorerna kolliderar med skeppet och i så fall tas meteorerna bort
                     if (m.meteorHitBox.Intersects(playerView.shipHitBox))
                     {
+                        hud.score += 5;
                         playerView.health -= 20;
                         m.isVisible = false;
                     }
@@ -206,6 +208,8 @@ namespace SpaceShooter
                     {
                         if (m.meteorHitBox.Intersects(playerView.bulletList[i].bulletHitBox))
                         {
+                            
+                            hud.score += 5;
                             m.isVisible = false;
                             playerView.bulletList.ElementAt(i).isVisible = false;
                         }
