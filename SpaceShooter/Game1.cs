@@ -28,10 +28,11 @@ namespace SpaceShooter
         PlayerSimulation playerSImulation;
         MeteorSimulation meteorSimulation;
         HeadsUpDisplay hud = new HeadsUpDisplay();
-
+        Explosion explosion;
         //lista med meteorer
         List<MeteorView> meteorList = new List<MeteorView>();
         List<EnemyView> enemyList = new List<EnemyView>();
+        List<Explosion> explosionList = new List<Explosion>();
         Random random = new Random();
 
         private int windowWidth;
@@ -61,7 +62,7 @@ namespace SpaceShooter
             // TODO: Add your initialization logic here
             this.windowWidth = GraphicsDevice.Viewport.Width;
             this.windowHeight = GraphicsDevice.Viewport.Height;
-
+            explosion = new Explosion();
             this.sbv = new SpaceBackgroundView(this.windowWidth, this.windowHeight);
             this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
             //this.meteorView = new MeteorView(this.windowWidth, this.windowHeight);
@@ -87,6 +88,7 @@ namespace SpaceShooter
             //this.meteorView.LoadContent(Content);
             this.playerView.LoadContent(this.Content);
             this.sbv.LoadContent(Content);
+            explosion.LoadContent(Content);
             //this.playerSImulation.LoadContent(Content);
             // TODO: use this.Content to load your game content here
         }
@@ -131,6 +133,13 @@ namespace SpaceShooter
                     enemyList.RemoveAt(i);
                     i--;
                 }
+            }
+        }
+
+        public void Explosions() {
+            for (int i = 0; 1 < explosionList.Count; i++) {
+                explosionList.RemoveAt(i);
+                i++;
             }
         }
 
@@ -208,7 +217,7 @@ namespace SpaceShooter
                     {
                         if (m.meteorHitBox.Intersects(playerView.bulletList[i].bulletHitBox))
                         {
-                            
+                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(m.position.X, m.position.Y)));
                             hud.score += 5;
                             m.isVisible = false;
                             playerView.bulletList.ElementAt(i).isVisible = false;
@@ -256,7 +265,7 @@ namespace SpaceShooter
             {
                 ev.Draw(spriteBatch);
             }
-
+            explosion.Draw(spriteBatch, (float)gameTime.ElapsedGameTime.TotalSeconds);
             spriteBatch.End();
             base.Draw(gameTime);
         }
