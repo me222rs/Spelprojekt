@@ -47,6 +47,7 @@
     <Compile Include="View\BulletView.cs" />
     <Compile Include="View\Camera.cs" />
     <Compile Include="View\EnemyView.cs" />
+    <Compile Include="View\Explosion.cs" />
     <Compile Include="View\HeadsUpDisplay.cs" />
     <Compile Include="View\MeteorView.cs" />
     <Compile Include="View\PlayerView.cs" />
@@ -64,6 +65,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\enemyship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\explosion.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\explosion3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\healthbar.png">
