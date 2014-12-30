@@ -17,23 +17,29 @@ namespace SpaceShooter.View
         public int health;
         public int speed;
         public int bulletDelay;
+        public int setBulletDelay;
         public int currentDifficultyLevel;
         public bool isVisible;
         public List<Bullet> bulletList;
         BulletView bv;
+        Viewport viewPort;
+
+
 
         //Lägger texturen för enemy som parameter så att man senare kan återanvända klassen för att skapa ett annat fiende
-        public EnemyView(Texture2D newTexture, Vector2 newPosition, Texture2D newBulletTexture) { 
+        public EnemyView(Texture2D newTexture, Vector2 newPosition, Texture2D newBulletTexture, Viewport viewPort) { 
             bulletList = new List<Bullet>();
             enemyTexture = newTexture;
             bulletTexture = newBulletTexture;
             health = 5;
             currentDifficultyLevel = 1;
-            bulletDelay = 20;
+            setBulletDelay = 50;
+            bulletDelay = 50;
             isVisible = true;
             bv = new BulletView(bulletTexture);
             position = newPosition;
             speed = 1;
+            this.viewPort = viewPort;
 
         }
 
@@ -43,7 +49,7 @@ namespace SpaceShooter.View
             position.Y += speed;
             Random randomX = new Random();
 
-            if (position.Y == 650) {
+            if (position.Y == viewPort.Height) {
                 position.Y = -50;
             }
             EnemyShootBullets();
@@ -54,6 +60,7 @@ namespace SpaceShooter.View
 
         public void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(enemyTexture, position, Color.White);
+
 
             foreach (Bullet bullet in bulletList) {
                 
@@ -78,7 +85,7 @@ namespace SpaceShooter.View
             }
 
             if (bulletDelay == 0) {
-                bulletDelay = 20;
+                bulletDelay = setBulletDelay;
             }
         }
 
@@ -91,7 +98,7 @@ namespace SpaceShooter.View
 
                 bullet.position.Y = bullet.position.Y + bullet.speed;
 
-                if (bullet.position.Y >= 650)
+                if (bullet.position.Y >= viewPort.Height)
                 {
                     bullet.isVisible = false;
                 }

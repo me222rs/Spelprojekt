@@ -34,7 +34,7 @@ namespace SpaceShooter
         List<EnemyView> enemyList = new List<EnemyView>();
         List<Explosion> explosionList = new List<Explosion>();
         Random random = new Random();
-
+        Camera camera;
         private int windowWidth;
         private int windowHeight;
         public int enemyBulletDamage;
@@ -67,7 +67,7 @@ namespace SpaceShooter
             this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
             //this.meteorView = new MeteorView(this.windowWidth, this.windowHeight);
             this.playerView = new PlayerView(this.windowWidth, this.windowHeight);
-            
+            camera = new Camera(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             //this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
             //this.playerSImulation = new PlayerSimulation(this.windowWidth, this.windowHeight);
             
@@ -96,8 +96,8 @@ namespace SpaceShooter
         
         public void LoadMeteors()
         {
-            int randomY = random.Next(-600, -50);
-            int randomX = random.Next(0, 550);
+            int randomY = random.Next(GraphicsDevice.Viewport.Height * -1, -50);
+            int randomX = random.Next(0, GraphicsDevice.Viewport.Width);
 
             if (meteorList.Count < 1)
             {
@@ -118,12 +118,22 @@ namespace SpaceShooter
         public void LoadEnemies()
         {
             int randomY = random.Next(-75, -50);
-            int randomX = random.Next(0, 450);
+            int randomX = random.Next(0, GraphicsDevice.Viewport.Width);
 
-            if (enemyList.Count < 3)
-            {
-                enemyList.Add(new EnemyView(Content.Load<Texture2D>("enemyship"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet")));
-            }
+                if (enemyList.Count < 3)
+                {
+                    enemyList.Add(new EnemyView(Content.Load<Texture2D>("enemyship"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
+
+                    if (playerView.health < 40)
+                    {
+                        randomY = random.Next(-75, -50);
+                        randomX = random.Next(0, GraphicsDevice.Viewport.Width);
+                        enemyList.Add(new EnemyView(Content.Load<Texture2D>("ship"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
+                    }
+                
+                }
+
+            
 
             //Rensar listan
             for (int i = 0; i < enemyList.Count; i++)

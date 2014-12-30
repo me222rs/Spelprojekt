@@ -28,6 +28,7 @@ namespace SpaceShooter.View
         private int frameRate = 24;
         private int numberOfFrames = 4;
         private int size;
+        public bool isVisible;
 
         public void LoadContent(ContentManager content) {
             explosion = content.Load<Texture2D>("explosion");
@@ -64,7 +65,11 @@ namespace SpaceShooter.View
             int frameY = frame / numberOfFrames;
 
             //spriteBatch.Begin();
-            spriteBatch.Draw(explosion, position, new Rectangle(frameX * size, frameY * size, size, size), Color.White);
+            if (isVisible)
+            {
+                spriteBatch.Draw(explosion, position, new Rectangle(frameX * size, frameY * size, size, size), Color.White);
+                
+            }
             //spriteBatch.End();
         }
 
