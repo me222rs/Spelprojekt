@@ -73,8 +73,6 @@ namespace SpaceShooter
             //this.meteorView = new MeteorView(this.windowWidth, this.windowHeight);
             this.playerView = new PlayerView(this.windowWidth, this.windowHeight);
             camera = new Camera(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            //this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
-            //this.playerSImulation = new PlayerSimulation(this.windowWidth, this.windowHeight);
             level = 1;
             hud = new HeadsUpDisplay(level);
             

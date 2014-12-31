@@ -27,19 +27,15 @@ namespace SpaceShooter.Model
         public float randomX;
         public float randomY;
 
-        public MeteorSimulation(int width, int height) { 
+        public MeteorSimulation(int width, int height)
+        { 
             //Default värden
             this.width = width;
             this.height = height;
-            //this.position = new Vector2(200, -50);
-            //this.meteor = null;
             this.speed = 2;
-            //meteor = newTexture;
-            //position = newPosition;
 
             randomX = random.Next(0, 450);
             randomY = random.Next(-600, -50);
-            //meteorTexture = null;
         }
 
         public void Update(GameTime gameTime)
@@ -55,13 +51,6 @@ namespace SpaceShooter.Model
                 this.position.Y = -50;
                 this.position.X = randomPos;
             }
-
-            //Roterar meteoren
-            //http://msdn.microsoft.com/en-us/library/bb203869.aspx
-            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.rotation += elapsed;
-            float circle = MathHelper.Pi * 2;
-            this.rotation = this.rotation % circle;
 
         }
 

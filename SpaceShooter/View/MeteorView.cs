@@ -23,6 +23,7 @@ namespace SpaceShooter.View
         private int height;
         Meteor meteor;
         Camera camera;
+        MeteorSimulation ms;
 
         public bool isVisible;
         Random random = new Random();
@@ -41,12 +42,12 @@ namespace SpaceShooter.View
             this.position = new Vector2(meteor.Xpos * camera.getScale(), -meteor.Ypos * camera.getScale());
             this.meteorTexture = null;
             this.speed = camera.getScale() * meteor.speed;
-
+            ms = new MeteorSimulation(width, height);
             meteorTexture = newTexture;
             position = newPosition;
 
-            randomX = random.Next(0, 450);
-            randomY = random.Next(-600, -50);
+            randomX = random.Next(0, width);
+            randomY = random.Next(-height, -50);
             isVisible = true;
             
         }
@@ -72,14 +73,6 @@ namespace SpaceShooter.View
                 this.position.Y = -50;
                 this.position.X = randomPos;
             }
-
-            ////Roterar meteoren endasat för visuell effekt, därför placerat i vyn
-            ////Roteringen stör kollisionen så jag tar bort roteringen så länge
-            ////http://msdn.microsoft.com/en-us/library/bb203869.aspx
-            //float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //this.rotation += elapsed;
-            //float circle = MathHelper.Pi * 2;
-            //this.rotation = this.rotation % circle;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
