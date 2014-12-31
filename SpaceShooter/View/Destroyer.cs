@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SpaceShooter.View
 {
-    class EnemyView
+    class Destroyer
     {
         public Rectangle enemyHitBox;
         public Texture2D enemyTexture;
@@ -27,14 +27,14 @@ namespace SpaceShooter.View
 
 
         //Lägger texturen för enemy som parameter så att man senare kan återanvända klassen för att skapa ett annat fiende
-        public EnemyView(Texture2D newTexture, Vector2 newPosition, Texture2D newBulletTexture, Viewport viewPort) { 
+        public Destroyer(Texture2D newTexture, Vector2 newPosition, Texture2D newBulletTexture, Viewport viewPort) { 
             bulletList = new List<Bullet>();
             enemyTexture = newTexture;
             bulletTexture = newBulletTexture;
-            health = 40;
+            health = 400;
             currentDifficultyLevel = 1;
-            setBulletDelay = 50;
-            bulletDelay = 50;
+            setBulletDelay = 20;
+            bulletDelay = 20;
             isVisible = true;
             bv = new BulletView(bulletTexture);
             position = newPosition;
@@ -47,6 +47,7 @@ namespace SpaceShooter.View
             enemyHitBox = new Rectangle((int)position.X, (int)position.Y, enemyTexture.Width, enemyTexture.Height);
 
             position.Y += speed;
+            
             Random randomX = new Random();
 
             if (position.Y == viewPort.Height) {

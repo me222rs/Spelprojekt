@@ -27,17 +27,21 @@ namespace SpaceShooter
         //MeteorSimulation meteorSimulation;
         PlayerSimulation playerSImulation;
         MeteorSimulation meteorSimulation;
-        HeadsUpDisplay hud = new HeadsUpDisplay();
+        
         Explosion explosion;
         //lista med meteorer
         List<MeteorView> meteorList = new List<MeteorView>();
         List<EnemyView> enemyList = new List<EnemyView>();
+        List<Destroyer> destroyerList = new List<Destroyer>();
         List<Explosion> explosionList = new List<Explosion>();
         Random random = new Random();
         Camera camera;
         private int windowWidth;
         private int windowHeight;
         public int enemyBulletDamage;
+        public int playerBulletDamage;
+        public int level;
+        HeadsUpDisplay hud;
 
         SpaceBackgroundView sbv;
 
@@ -49,6 +53,7 @@ namespace SpaceShooter
             graphics.PreferredBackBufferHeight = 650;
             Content.RootDirectory = "Content";
             enemyBulletDamage = 20;
+            playerBulletDamage = 20;
         }
 
         /// <summary>
@@ -70,7 +75,8 @@ namespace SpaceShooter
             camera = new Camera(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             //this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
             //this.playerSImulation = new PlayerSimulation(this.windowWidth, this.windowHeight);
-            
+            level = 1;
+            hud = new HeadsUpDisplay(level);
             
 
             base.Initialize();
@@ -120,16 +126,23 @@ namespace SpaceShooter
             int randomY = random.Next(-75, -50);
             int randomX = random.Next(0, GraphicsDevice.Viewport.Width);
 
+            //if(level == 2 || level == 3){
                 if (enemyList.Count < 3)
                 {
                     enemyList.Add(new EnemyView(Content.Load<Texture2D>("enemyship"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
+                //}
 
+                    //Om spelaren har lite liv kvar så spawnar en destroyer för att avsluta det hela.
                     if (playerView.health < 40)
                     {
-                        randomY = random.Next(-75, -50);
-                        randomX = random.Next(0, GraphicsDevice.Viewport.Width);
-                        enemyList.Add(new EnemyView(Content.Load<Texture2D>("ship"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
-                    }
+                        if (destroyerList.Count < 2)
+                        {
+                            randomY = random.Next(-75, -50);
+                            randomX = random.Next(-50, GraphicsDevice.Viewport.Width - 50);
+                            destroyerList.Add(new Destroyer(Content.Load<Texture2D>("ship"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
+                        }
+                        
+                       }
                 
                 }
 
@@ -141,6 +154,13 @@ namespace SpaceShooter
                 if (!enemyList[i].isVisible)
                 {
                     enemyList.RemoveAt(i);
+                    i--;
+                }
+            }
+            for (int i = 0; i < destroyerList.Count; i++) {
+                if (!destroyerList[i].isVisible)
+                {
+                    destroyerList.RemoveAt(i);
                     i--;
                 }
             }
@@ -198,15 +218,43 @@ namespace SpaceShooter
                 {
                     if (playerView.bulletList[i].bulletHitBox.Intersects(ev.enemyHitBox))
                     {
+                        ev.health -= playerBulletDamage;
                         hud.score += 20;
                         playerView.bulletList[i].isVisible = false;
-                        ev.isVisible = false;
+                        //ev.isVisible = false;
+                        if(ev.health < 1){
+                            ev.isVisible = false;
+                        }
                     }
 
                 }
                 ev.update(gameTime);
                 
+                
             }
+
+            foreach (Destroyer d in destroyerList)
+            {
+                if (d.enemyHitBox.Intersects(playerView.shipHitBox))
+                {
+                    playerView.health -= 80;
+                    d.isVisible = false;
+                }
+
+                for (int i = 0; i < d.bulletList.Count; i++)
+                {
+                    if (playerView.shipHitBox.Intersects(d.bulletList[i].bulletHitBox))
+                    {
+                        playerView.health -= enemyBulletDamage;
+                        d.bulletList[i].isVisible = false;
+                    }
+                }
+
+
+                d.update(gameTime);
+            }
+
+
 
                 // TODO: Add your update logic here
                 foreach (MeteorView m in meteorList)
@@ -274,6 +322,10 @@ namespace SpaceShooter
             foreach (EnemyView ev in enemyList)
             {
                 ev.Draw(spriteBatch);
+            }
+            foreach (Destroyer d in destroyerList)
+            {
+                d.Draw(spriteBatch);
             }
             explosion.Draw(spriteBatch, (float)gameTime.ElapsedGameTime.TotalSeconds);
             spriteBatch.End();

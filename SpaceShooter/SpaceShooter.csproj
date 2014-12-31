@@ -46,6 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\BulletView.cs" />
     <Compile Include="View\Camera.cs" />
+    <Compile Include="View\Destroyer.cs" />
     <Compile Include="View\EnemyView.cs" />
     <Compile Include="View\Explosion.cs" />
     <Compile Include="View\HeadsUpDisplay.cs" />
