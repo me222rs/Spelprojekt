@@ -36,6 +36,7 @@ namespace SpaceShooter.View
         private float vy;
         private float diameter;
         BulletView bulletView;
+        Sound s = new Sound();
 
 
         //Skjuta
@@ -75,6 +76,7 @@ namespace SpaceShooter.View
             this.bulletTexture = Content.Load<Texture2D>("playerbullet");
             this.healthTexture = Content.Load<Texture2D>("healthbar");
             bulletView = new BulletView(bulletTexture);
+            s.LoadContent(Content);
             //bullet = new Bullet(bulletTexture);
         }
 
@@ -106,6 +108,7 @@ namespace SpaceShooter.View
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 this.bulletList = bulletSimulation.PlayerShoot(position, this.bulletList, bulletTexture);
+                //s.shoot.Play();
                 //PlayerShoot();
             }
 

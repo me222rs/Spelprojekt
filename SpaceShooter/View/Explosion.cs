@@ -11,66 +11,52 @@ namespace SpaceShooter.View
 {
     class Explosion
     {
-        //public Texture2D explosionTexture;
-        //public Vector2 position;
-        //public Vector2 origin;
-        //public Rectangle rectangle;
-        //public float timer;
-        //public float interval;
-        //public int frame;
-        //public int width;
-        //public int height;
-
-        Texture2D explosion;
-        private Vector2 position;
-        private float timeElapsed;
-        private float maxTime = 0.9f;
-        private int frameRate = 24;
-        private int numberOfFrames = 4;
-        private int size;
+        public Vector2 position;
+        public Texture2D texture;
+        public float timer;
+        public float interval;
+        public Vector2 origin;
+        public int currentFrame;
+        public int spriteWidth;
+        public int spriteHeight;
+        public Rectangle srcRect;
         public bool isVisible;
 
-        public void LoadContent(ContentManager content) {
-            explosion = content.Load<Texture2D>("explosion");
-            size = explosion.Bounds.Width / numberOfFrames;
-            //position.X = 80;
-            //position.Y = 200;
-        }
-        public Explosion() { 
-        
-        }
-        public Explosion(Texture2D texture, Vector2 position) {
-            this.position = position;
+        public Explosion(Texture2D newTexture, Vector2 newPosition) {
+            position = newPosition;
+            texture = newTexture;
+            timer = 0f;
+            interval = 40f;
+            currentFrame = 1;
+            spriteWidth = 128;
+            spriteHeight = 128;
+            isVisible = true;
         }
 
-        //public Explosion(Texture2D texture, Vector2 position) {
-        //    this.position = position;
-        //    explosionTexture = texture;
-        //    timer = 0f;
-        //    interval = 20f;
-        //}
+        public void LoadContent(ContentManager content) { 
+            
+        }
 
-
-        public void Draw(SpriteBatch spriteBatch, float elapsedTime)
-        {
-
-            if (timeElapsed >= maxTime)
-            {
-                timeElapsed = 0;
+        public void Update(GameTime gameTime) {
+            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (timer > interval) {
+                currentFrame++;
+                timer = 0;
             }
-            timeElapsed += elapsedTime;
-            float percentAnimated = timeElapsed / maxTime;
-            int frame = (int)(percentAnimated * frameRate);
-            int frameX = frame % numberOfFrames;
-            int frameY = frame / numberOfFrames;
 
-            //spriteBatch.Begin();
-            if (isVisible)
-            {
-                spriteBatch.Draw(explosion, position, new Rectangle(frameX * size, frameY * size, size, size), Color.White);
-                
+            if(currentFrame == 17){
+                isVisible = false;
+                currentFrame = 0;
             }
-            //spriteBatch.End();
+
+            srcRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
+            origin = new Vector2(srcRect.Width / 2, srcRect.Height / 2);
+        }
+
+        public void Draw(SpriteBatch spriteBatch) {
+            if (isVisible) {
+                spriteBatch.Draw(texture, position, srcRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+            }
         }
 
     }

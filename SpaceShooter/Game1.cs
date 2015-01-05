@@ -19,6 +19,11 @@ namespace SpaceShooter
     /// </summary>
     public class Game1 : Game
     {
+
+        public enum State { 
+            Menu, Play, Gameover
+        }
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         PlayerView playerView;
@@ -28,12 +33,15 @@ namespace SpaceShooter
         PlayerSimulation playerSImulation;
         MeteorSimulation meteorSimulation;
         
-        Explosion explosion;
-        //lista med meteorer
+        //Listor
         List<MeteorView> meteorList = new List<MeteorView>();
         List<EnemyView> enemyList = new List<EnemyView>();
         List<Destroyer> destroyerList = new List<Destroyer>();
         List<Explosion> explosionList = new List<Explosion>();
+
+        //Texturer
+        public Texture2D menu;
+
         Random random = new Random();
         Camera camera;
         private int windowWidth;
@@ -45,6 +53,8 @@ namespace SpaceShooter
 
         SpaceBackgroundView sbv;
 
+        State gameState = State.Play;
+
         public Game1()
             : base()
         {
@@ -54,6 +64,7 @@ namespace SpaceShooter
             Content.RootDirectory = "Content";
             enemyBulletDamage = 20;
             playerBulletDamage = 20;
+            menu = null;
         }
 
         /// <summary>
@@ -67,7 +78,6 @@ namespace SpaceShooter
             // TODO: Add your initialization logic here
             this.windowWidth = GraphicsDevice.Viewport.Width;
             this.windowHeight = GraphicsDevice.Viewport.Height;
-            explosion = new Explosion();
             this.sbv = new SpaceBackgroundView(this.windowWidth, this.windowHeight);
             this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
             //this.meteorView = new MeteorView(this.windowWidth, this.windowHeight);
@@ -92,9 +102,7 @@ namespace SpaceShooter
             //this.meteorView.LoadContent(Content);
             this.playerView.LoadContent(this.Content);
             this.sbv.LoadContent(Content);
-            explosion.LoadContent(Content);
-            //this.playerSImulation.LoadContent(Content);
-            // TODO: use this.Content to load your game content here
+            //menu = new 
         }
 
         
@@ -148,8 +156,7 @@ namespace SpaceShooter
                     }
                 }
                 }
-
-            
+    
 
             //Rensar listan
             for (int i = 0; i < enemyList.Count; i++)
@@ -170,9 +177,12 @@ namespace SpaceShooter
         }
 
         public void Explosions() {
-            for (int i = 0; 1 < explosionList.Count; i++) {
-                explosionList.RemoveAt(i);
-                i++;
+            for (int i = 0; i < explosionList.Count; i++) {
+                if (!explosionList[i].isVisible)
+                {
+                    explosionList.RemoveAt(i);
+                    i++;
+                }
             }
         }
 
@@ -197,106 +207,140 @@ namespace SpaceShooter
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            //Hanerar kollision mellan fiendeskepp och spelarskepp
-            foreach (EnemyView ev in enemyList)
-            {
-                if (ev.enemyHitBox.Intersects(playerView.shipHitBox))
-                {
-                    playerView.health -= 40;
-                    ev.isVisible = false;
-                }
+            switch (gameState) {
+                case State.Play: {
 
-                //Om spelarskeppet kolliderar med en fiendekula
-                for (int i = 0; i < ev.bulletList.Count; i++)
-                {
-                    if (playerView.shipHitBox.Intersects(ev.bulletList[i].bulletHitBox))
-                    {
-                        playerView.health -= enemyBulletDamage;
-                        ev.bulletList[i].isVisible = false;
-                    }
-                }
+                    //this.playerView = new PlayerView(this.windowWidth, this.windowHeight);
 
-                //Om spelarkulorna kolliderar med fiendeskepp
-                for (int i = 0; i < playerView.bulletList.Count; i++)
-                {
-                    if (playerView.bulletList[i].bulletHitBox.Intersects(ev.enemyHitBox))
+                    //Hanerar kollision mellan fiendeskepp och spelarskepp
+                    foreach (EnemyView ev in enemyList)
                     {
-                        ev.health -= playerBulletDamage;
-                        hud.score += 20;
-                        playerView.bulletList[i].isVisible = false;
-                        //ev.isVisible = false;
-                        if(ev.health < 1){
+                        if (ev.enemyHitBox.Intersects(playerView.shipHitBox))
+                        {
+                            playerView.health -= 40;
                             ev.isVisible = false;
                         }
-                    }
 
-                }
-                ev.update(gameTime);
-                
-                
-            }
-
-            foreach (Destroyer d in destroyerList)
-            {
-                if (d.enemyHitBox.Intersects(playerView.shipHitBox))
-                {
-                    playerView.health -= 80;
-                    d.isVisible = false;
-                }
-
-                for (int i = 0; i < d.bulletList.Count; i++)
-                {
-                    if (playerView.shipHitBox.Intersects(d.bulletList[i].bulletHitBox))
-                    {
-                        playerView.health -= enemyBulletDamage;
-                        d.bulletList[i].isVisible = false;
-                    }
-                }
-
-
-                d.update(gameTime);
-            }
-
-
-
-                // TODO: Add your update logic here
-                foreach (MeteorView m in meteorList)
-                {
-                    // Kollar om meteorerna kolliderar med skeppet och i så fall tas meteorerna bort
-                    if (m.meteorHitBox.Intersects(playerView.shipHitBox))
-                    {
-                        hud.score += 5;
-                        playerView.health -= 20;
-                        m.isVisible = false;
-                    }
-
-
-
-
-                    // Kollar om meteorerna kolliderar med kulorna och i så fall tas de bort
-                    for (int i = 0; i < playerView.bulletList.Count; i++)
-                    {
-                        if (m.meteorHitBox.Intersects(playerView.bulletList[i].bulletHitBox))
+                        //Om spelarskeppet kolliderar med en fiendekula
+                        for (int i = 0; i < ev.bulletList.Count; i++)
                         {
-                            explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion"), new Vector2(m.position.X, m.position.Y)));
-                            hud.score += 5;
-                            m.isVisible = false;
-                            playerView.bulletList.ElementAt(i).isVisible = false;
+                            if (playerView.shipHitBox.Intersects(ev.bulletList[i].bulletHitBox))
+                            {
+                                playerView.health -= enemyBulletDamage;
+                                ev.bulletList[i].isVisible = false;
+                            }
                         }
+
+                        //Om spelarkulorna kolliderar med fiendeskepp
+                        for (int i = 0; i < playerView.bulletList.Count; i++)
+                        {
+                            if (playerView.bulletList[i].bulletHitBox.Intersects(ev.enemyHitBox))
+                            {
+                                //explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(ev.position.X, ev.position.Y)));
+                                ev.health -= playerBulletDamage;
+                                if (ev.health < 1)
+                                {
+                                    explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(ev.position.X, ev.position.Y)));
+                                }
+                                hud.score += 20;
+                                playerView.bulletList[i].isVisible = false;
+                                //ev.isVisible = false;
+                                if (ev.health < 1)
+                                {
+                                    ev.isVisible = false;
+                                }
+                            }
+
+                        }
+                        ev.update(gameTime);
+
+
                     }
 
-                    m.Update(gameTime);
+                    foreach (Destroyer d in destroyerList)
+                    {
+                        if (d.enemyHitBox.Intersects(playerView.shipHitBox))
+                        {
+                            playerView.health -= 80;
+                            d.isVisible = false;
+                        }
+
+                        for (int i = 0; i < d.bulletList.Count; i++)
+                        {
+                            if (playerView.shipHitBox.Intersects(d.bulletList[i].bulletHitBox))
+                            {
+                                playerView.health -= enemyBulletDamage;
+                                d.bulletList[i].isVisible = false;
+                            }
+                        }
+
+
+                        d.update(gameTime);
+                    }
+
+
+                    foreach (Explosion ex in explosionList)
+                    {
+                        ex.Update(gameTime);
+                    }
+
+                    // TODO: Add your update logic here
+                    foreach (MeteorView m in meteorList)
+                    {
+                        // Kollar om meteorerna kolliderar med skeppet och i så fall tas meteorerna bort
+                        if (m.meteorHitBox.Intersects(playerView.shipHitBox))
+                        {
+                            hud.score += 5;
+                            playerView.health -= 20;
+                            m.isVisible = false;
+                        }
+
+
+
+
+                        // Kollar om meteorerna kolliderar med kulorna och i så fall tas de bort
+                        for (int i = 0; i < playerView.bulletList.Count; i++)
+                        {
+                            if (m.meteorHitBox.Intersects(playerView.bulletList[i].bulletHitBox))
+                            {
+                                explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(m.position.X, m.position.Y)));
+                                hud.score += 5;
+                                m.isVisible = false;
+                                playerView.bulletList.ElementAt(i).isVisible = false;
+                            }
+                        }
+
+                        m.Update(gameTime);
+                    }
+
+                    hud.Update(gameTime);
+
+
+                    this.sbv.Update(gameTime);
+                    LoadMeteors();
+                    LoadEnemies();
+                    this.meteorSimulation.Update(gameTime);
+                    this.playerView.Update(gameTime);
+                    Explosions();
+                    break;
                 }
 
-                hud.Update(gameTime);
+                case State.Menu:
+                {
+                    break;
+                }
+
+                case State.Gameover: 
+                {
+                    break;
+                }
+            }
+
+            
+            
 
 
-                this.sbv.Update(gameTime);
-                LoadMeteors();
-                LoadEnemies();
-                this.meteorSimulation.Update(gameTime);
-                this.playerView.Update(gameTime);
-
+            
                 base.Update(gameTime);
             
         }
@@ -314,23 +358,44 @@ namespace SpaceShooter
 
 
             spriteBatch.Begin();
-            sbv.Draw(spriteBatch);
-            hud.Draw(spriteBatch);
-            foreach (MeteorView mv in meteorList)
-            {
-                mv.Draw(spriteBatch);
+
+            switch (gameState) {
+                case State.Play: 
+                {
+                    sbv.Draw(spriteBatch);
+                    hud.Draw(spriteBatch);
+                    foreach (Explosion e in explosionList)
+                    {
+                        e.Draw(spriteBatch);
+                    }
+
+                    foreach (MeteorView mv in meteorList)
+                    {
+                        mv.Draw(spriteBatch);
+                    }
+                    //meteorView.Draw(spriteBatch);
+                    playerView.Draw(spriteBatch);
+                    foreach (EnemyView ev in enemyList)
+                    {
+                        ev.Draw(spriteBatch);
+                    }
+                    foreach (Destroyer d in destroyerList)
+                    {
+                        d.Draw(spriteBatch);
+                    }
+                    break;
+                }
+                case State.Menu:
+                {
+                    break;
+                }
+                case State.Gameover:
+                {
+                    break;
+                }
             }
-            //meteorView.Draw(spriteBatch);
-            playerView.Draw(spriteBatch);
-            foreach (EnemyView ev in enemyList)
-            {
-                ev.Draw(spriteBatch);
-            }
-            foreach (Destroyer d in destroyerList)
-            {
-                d.Draw(spriteBatch);
-            }
-            explosion.Draw(spriteBatch, (float)gameTime.ElapsedGameTime.TotalSeconds);
+
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
