@@ -53,7 +53,7 @@ namespace SpaceShooter
 
         SpaceBackgroundView sbv;
 
-        State gameState = State.Play;
+        State gameState = State.Menu;
 
         public Game1()
             : base()
@@ -102,7 +102,7 @@ namespace SpaceShooter
             //this.meteorView.LoadContent(Content);
             this.playerView.LoadContent(this.Content);
             this.sbv.LoadContent(Content);
-            //menu = new 
+            menu = Content.Load<Texture2D>("space");
         }
 
         
@@ -322,16 +322,38 @@ namespace SpaceShooter
                     this.meteorSimulation.Update(gameTime);
                     this.playerView.Update(gameTime);
                     Explosions();
+
+                    if (playerView.health < 1)
+                    {
+                        gameState = State.Gameover;
+                    }
+
                     break;
                 }
 
                 case State.Menu:
                 {
+                    KeyboardState kState = Keyboard.GetState();
+                    if (kState.IsKeyDown(Keys.Enter)) {
+                        gameState = State.Play;
+                    }
                     break;
                 }
 
                 case State.Gameover: 
                 {
+                    KeyboardState kState = Keyboard.GetState();
+                    if (kState.IsKeyDown(Keys.Space))
+                    {
+                        gameState = State.Menu;
+                        playerView.health = 200;
+                        hud.score = 0;
+
+                    }
+                    else if (kState.IsKeyDown(Keys.Tab))
+                    {
+                        Exit();
+                    }
                     break;
                 }
             }
@@ -387,10 +409,12 @@ namespace SpaceShooter
                 }
                 case State.Menu:
                 {
+                    GraphicsDevice.Clear(Color.Green);
                     break;
                 }
                 case State.Gameover:
                 {
+                    GraphicsDevice.Clear(Color.Red);
                     break;
                 }
             }
