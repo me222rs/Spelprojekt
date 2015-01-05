@@ -35,7 +35,7 @@ namespace SpaceShooter.Model
             if (bulletDelay <= 0)
             {
                 Bullet newBullet = new Bullet(bulletTexture);
-                newBullet.position = new Vector2(position.X + 32 - bulletTexture.Width / 2, position.Y + 30);
+                newBullet.position = new Vector2(position.X + 50.5f - bulletTexture.Width / 2, position.Y);
                 newBullet.isVisible = true;
                 if (bulletList.Count() < 20)
                 {

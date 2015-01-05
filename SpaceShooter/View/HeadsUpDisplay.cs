@@ -15,6 +15,8 @@ namespace SpaceShooter.View
         public int width;
         public int height;
         public int level;
+        public int time;
+        
 
         //Tydligen så har inte Monogame fullt stöd för spritefonts. 
         //Hittade att man kunde ladda ned ett projekt som gjorde om
@@ -27,6 +29,7 @@ namespace SpaceShooter.View
         public bool hudIsVisible;
         public Vector2 hpPosition;
         public Vector2 levelPosition;
+        public Vector2 timePosition;
 
         public HeadsUpDisplay(int level) {
             score = 0;
@@ -37,6 +40,7 @@ namespace SpaceShooter.View
             hpPosition = new Vector2(0, 25);
             scorePosition = new Vector2(0, 50);
             levelPosition = new Vector2(0, 75);
+            timePosition = new Vector2(0, 100);
             this.level = level;
         }
         
@@ -46,16 +50,22 @@ namespace SpaceShooter.View
 
         public void Update(GameTime gameTime) {
             KeyboardState keyBoard = Keyboard.GetState();
-
-
+            time += 1;
+            if (time == 600) {
+                level += 1;
+            }
 
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
+            Vector2 v = new Vector2(200, 200);
             spritebatch.DrawString(spriteFont, "Score: " + score, scorePosition, Color.White);
             spritebatch.DrawString(spriteFont, "HP", hpPosition, Color.White);
+            spritebatch.DrawString(spriteFont, "Time:  " + time/60, timePosition, Color.White);
             spritebatch.DrawString(spriteFont, "Level " + level, levelPosition, Color.White);
+            
         }
+
     }
 }

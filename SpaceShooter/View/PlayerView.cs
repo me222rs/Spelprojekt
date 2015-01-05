@@ -71,7 +71,7 @@ namespace SpaceShooter.View
 
         public void LoadContent(ContentManager Content)
         {
-            this.shipTexture = Content.Load<Texture2D>("ship");
+            this.shipTexture = Content.Load<Texture2D>("playerShip1_blue");
             this.bulletTexture = Content.Load<Texture2D>("playerbullet");
             this.healthTexture = Content.Load<Texture2D>("healthbar");
             bulletView = new BulletView(bulletTexture);

@@ -49,8 +49,8 @@ namespace SpaceShooter
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 500;
-            graphics.PreferredBackBufferHeight = 650;
+            graphics.PreferredBackBufferWidth = 700;
+            graphics.PreferredBackBufferHeight = 950;
             Content.RootDirectory = "Content";
             enemyBulletDamage = 20;
             playerBulletDamage = 20;
@@ -103,9 +103,11 @@ namespace SpaceShooter
             int randomY = random.Next(GraphicsDevice.Viewport.Height * -1, -50);
             int randomX = random.Next(0, GraphicsDevice.Viewport.Width);
 
-            if (meteorList.Count < 1)
+            if (meteorList.Count < 5)
             {
-                meteorList.Add(new MeteorView(this.windowWidth, this.windowHeight, Content.Load<Texture2D>("asteroid"), new Vector2(randomX, randomY)));
+                //Slumpar ut en stor eller liten meteor, dom gör lika mkt skada, men det kan vara svårt att undvika en stor
+                    meteorList.Add(new MeteorView(this.windowWidth, this.windowHeight, Content.Load<Texture2D>("meteorBrown_med1"), new Vector2(randomX, randomY)));
+                
             }
 
             //Rensar listan
@@ -124,12 +126,15 @@ namespace SpaceShooter
             int randomY = random.Next(-75, -50);
             int randomX = random.Next(0, GraphicsDevice.Viewport.Width);
 
-            //if(level == 2 || level == 3){
+            if(hud.level == 2 || hud.level == 3){
+                
                 if (enemyList.Count < 3)
                 {
-                    enemyList.Add(new EnemyView(Content.Load<Texture2D>("enemyship"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
-                //}
+                    enemyList.Add(new EnemyView(Content.Load<Texture2D>("enemyRed3"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
+                }
 
+                if (hud.level == 3)
+                {
                     //Om spelaren har lite liv kvar så spawnar en destroyer för att avsluta det hela.
                     if (playerView.health < 40)
                     {
@@ -137,11 +142,11 @@ namespace SpaceShooter
                         {
                             randomY = random.Next(-75, -50);
                             randomX = random.Next(-50, GraphicsDevice.Viewport.Width - 50);
-                            destroyerList.Add(new Destroyer(Content.Load<Texture2D>("ship"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
+                            destroyerList.Add(new Destroyer(Content.Load<Texture2D>("enemyBlack1"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
                         }
-                        
-                       }
-                
+
+                    }
+                }
                 }
 
             

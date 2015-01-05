@@ -10,7 +10,7 @@ namespace SpaceShooter.Model
     {
         public float Xpos = 0.5f;
         public float Ypos = 1.5f;
-        public float speed = 0.02f;
+        public float speed = 0.01f;
         public float diameter = 0.1f;
     }
 }

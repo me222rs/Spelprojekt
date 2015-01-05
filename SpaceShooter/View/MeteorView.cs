@@ -53,6 +53,8 @@ namespace SpaceShooter.View
         }
 
         public void LoadContent(ContentManager content) {
+
+            
             this.meteorTexture = content.Load<Texture2D>("asteroid");
             //Mitten på meteoren
             this.origin.X = meteorTexture.Width / 2;
