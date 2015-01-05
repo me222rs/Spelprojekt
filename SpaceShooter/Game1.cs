@@ -27,10 +27,6 @@ namespace SpaceShooter
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         PlayerView playerView;
-        //MeteorView meteorView;
-        BulletView bulletView;
-        //MeteorSimulation meteorSimulation;
-        PlayerSimulation playerSImulation;
         MeteorSimulation meteorSimulation;
         
         //Listor
@@ -59,6 +55,8 @@ namespace SpaceShooter
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
+
+            
             graphics.PreferredBackBufferWidth = 700;
             graphics.PreferredBackBufferHeight = 950;
             Content.RootDirectory = "Content";
@@ -80,8 +78,7 @@ namespace SpaceShooter
             this.windowHeight = GraphicsDevice.Viewport.Height;
             this.sbv = new SpaceBackgroundView(this.windowWidth, this.windowHeight);
             this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
-            //this.meteorView = new MeteorView(this.windowWidth, this.windowHeight);
-            this.playerView = new PlayerView(this.windowWidth, this.windowHeight);
+            this.playerView = new PlayerView(this.windowWidth, this.windowHeight, sbv.space);
             camera = new Camera(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             level = 1;
             hud = new HeadsUpDisplay(level);
@@ -99,7 +96,6 @@ namespace SpaceShooter
             // Create a new SpriteBatch, which can be used to draw textures.
             hud.LoadContent(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //this.meteorView.LoadContent(Content);
             this.playerView.LoadContent(this.Content);
             this.sbv.LoadContent(Content);
             menu = Content.Load<Texture2D>("space");
@@ -210,8 +206,6 @@ namespace SpaceShooter
             switch (gameState) {
                 case State.Play: {
 
-                    //this.playerView = new PlayerView(this.windowWidth, this.windowHeight);
-
                     //Hanerar kollision mellan fiendeskepp och spelarskepp
                     foreach (EnemyView ev in enemyList)
                     {
@@ -236,7 +230,6 @@ namespace SpaceShooter
                         {
                             if (playerView.bulletList[i].bulletHitBox.Intersects(ev.enemyHitBox))
                             {
-                                //explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(ev.position.X, ev.position.Y)));
                                 ev.health -= playerBulletDamage;
                                 if (ev.health < 1)
                                 {
@@ -244,7 +237,7 @@ namespace SpaceShooter
                                 }
                                 hud.score += 20;
                                 playerView.bulletList[i].isVisible = false;
-                                //ev.isVisible = false;
+
                                 if (ev.health < 1)
                                 {
                                     ev.isVisible = false;
@@ -395,7 +388,6 @@ namespace SpaceShooter
                     {
                         mv.Draw(spriteBatch);
                     }
-                    //meteorView.Draw(spriteBatch);
                     playerView.Draw(spriteBatch);
                     foreach (EnemyView ev in enemyList)
                     {

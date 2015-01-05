@@ -27,10 +27,6 @@ namespace SpaceShooter.Model
             isVisible = false;
 
         }
-        //Ritar ut kulorna
-        //public void Draw(SpriteBatch spriteBatch) {
-        //    spriteBatch.Draw(bullet, position, Color.White);
-        //}
     }
 
 

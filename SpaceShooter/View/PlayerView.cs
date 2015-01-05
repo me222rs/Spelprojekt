@@ -37,23 +37,25 @@ namespace SpaceShooter.View
         private float diameter;
         BulletView bulletView;
         Sound s = new Sound();
+        private Texture2D sbv;
 
 
         //Skjuta
         public List<Bullet> bulletList;
         public int bulletDelay = 10;
 
-        public PlayerView(int width, int height)
+        public PlayerView(int width, int height, Texture2D sbv)
         {
             bulletList = new List<Bullet>();
             this.shipTexture = null;
             this.isColliding = false;
-            
+            this.sbv = sbv;
 
             //Sätter fönstrets storlek
             this.windowWidth = width;
             this.windowHeight = height;
 
+            Vector2 v2 = new Vector2(width, height);
             //Skapar instanser av Player och Camera
             this.player = new Player();
             this.camera = new Camera(width, height);
@@ -119,18 +121,15 @@ namespace SpaceShooter.View
             Vector2 screenposMax;
             Vector2 modelpos = new Vector2(1.0f, 1.0f);
             screenposMax = camera.getViewPosPic(modelpos, shipTexture);
-
+            Vector2 maxPos = new Vector2(windowWidth, windowHeight);
             PlayerSimulation ps = new PlayerSimulation();
-            this.position = ps.isCollidingWithBorders(this.position, screenposMax);
+            this.position = ps.isCollidingWithBorders(this.position, maxPos, shipTexture, sbv);
 
 
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
-            //BulletView bv = new BulletView();
-            //spriteBatch.Draw(this.shipTexture, this.position, shipHitBox, Color.White);
             spriteBatch.Draw(this.shipTexture, this.position, Color.White);
             spriteBatch.Draw(this.healthTexture, healthBox, Color.White);
             foreach (Bullet bullet in bulletList)

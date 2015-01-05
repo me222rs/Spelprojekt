@@ -15,9 +15,9 @@ namespace SpaceShooter.Model
     {
         public List<Bullet> bulletList;
         public int bulletDelay = 1;
+        
 
-
-        public Vector2 isCollidingWithBorders(Vector2 v, Vector2 screenposMax) {
+        public Vector2 isCollidingWithBorders(Vector2 v, Vector2 screenposMax, Texture2D shipTexture, Texture2D sbv) {
             //Kollision med kanterna
             if (v.X <= 0.0f)
             {
@@ -27,13 +27,13 @@ namespace SpaceShooter.Model
             {
                 v.Y = 0.0f;
             }
-            if (v.X >= screenposMax.X)
+            if (v.X >= screenposMax.X - shipTexture.Width)
             {
-                v.X = screenposMax.X;
+                v.X = screenposMax.X - shipTexture.Width;
             }
-            if (v.Y >= screenposMax.Y)
+            if (v.Y >= screenposMax.Y - shipTexture.Height)
             {
-                v.Y = screenposMax.Y;
+                v.Y = screenposMax.Y - shipTexture.Height;
             }
 
             return v;
