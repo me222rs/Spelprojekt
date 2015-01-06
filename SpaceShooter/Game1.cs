@@ -28,6 +28,7 @@ namespace SpaceShooter
         SpriteBatch spriteBatch;
         PlayerView playerView;
         MeteorSimulation meteorSimulation;
+        Texture2D menuTexture;
         
         //Listor
         List<MeteorView> meteorList = new List<MeteorView>();
@@ -37,6 +38,8 @@ namespace SpaceShooter
 
         //Texturer
         public Texture2D menu;
+        public Texture2D pauseTexture;
+        public Texture2D gameOverTexture;
 
         Random random = new Random();
         Camera camera;
@@ -77,11 +80,17 @@ namespace SpaceShooter
             // TODO: Add your initialization logic here
             this.windowWidth = GraphicsDevice.Viewport.Width;
             this.windowHeight = GraphicsDevice.Viewport.Height;
+
+            //Textures
+            menuTexture = Content.Load<Texture2D>("Menu");
+            pauseTexture = Content.Load<Texture2D>("Pause");
+            gameOverTexture = Content.Load<Texture2D>("GameOver");
+
             this.sbv = new SpaceBackgroundView(this.windowWidth, this.windowHeight);
             this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
             this.playerView = new PlayerView(this.windowWidth, this.windowHeight, sbv.space);
             camera = new Camera(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            level = 3;
+            level = 1;
             hud = new HeadsUpDisplay(level);
             currentLevel = 1;
 
@@ -473,15 +482,33 @@ namespace SpaceShooter
                 }
                 case State.Menu:
                 {
-                    GraphicsDevice.Clear(Color.Green);
+                    spriteBatch.Draw(menuTexture,
+                    new Rectangle(0, 0,
+                    windowWidth, windowHeight), null,
+                    Color.White, 0, Vector2.Zero,
+                    SpriteEffects.None, 0);
+
+                    GraphicsDevice.Clear(Color.Black);
                     break;
                 }
                 case State.Gameover:
                 {
+                    spriteBatch.Draw(gameOverTexture,
+                    new Rectangle(0, 0,
+                    windowWidth, windowHeight), null,
+                    Color.White, 0, Vector2.Zero,
+                    SpriteEffects.None, 0);
+
                     GraphicsDevice.Clear(Color.Red);
                     break;
                 }
                 case State.Pause: {
+                    spriteBatch.Draw(pauseTexture,
+                    new Rectangle(0, 0,
+                    windowWidth, windowHeight), null,
+                    Color.White, 0, Vector2.Zero,
+                    SpriteEffects.None, 0);
+
                     GraphicsDevice.Clear(Color.Blue);
                     break;
                 }
