@@ -51,6 +51,7 @@ namespace SpaceShooter.View
 
             if (position.Y == viewPort.Height) {
                 position.Y = -50;
+                position.X = randomX.Next(enemyTexture.Width, viewPort.Width - enemyTexture.Width);
             }
             EnemyShootBullets();
             UpdateBullet();
@@ -75,7 +76,7 @@ namespace SpaceShooter.View
 
             if (bulletDelay <= 0) {
                 Bullet newBullet = new Bullet(bulletTexture);
-                    newBullet.position = new Vector2(position.X + enemyTexture.Width / 2 - newBullet.bullet.Width / 2, position.Y + 30);
+                    newBullet.position = new Vector2(position.X + enemyTexture.Width / 2 - newBullet.bullet.Width / 2, position.Y);
 
                     newBullet.isVisible = true;
 

@@ -21,7 +21,7 @@ namespace SpaceShooter
     {
 
         public enum State { 
-            Menu, Play, Gameover
+            Menu, Play, Gameover, Pause, LevelComplete, Win
         }
 
         GraphicsDeviceManager graphics;
@@ -45,6 +45,7 @@ namespace SpaceShooter
         public int enemyBulletDamage;
         public int playerBulletDamage;
         public int level;
+        public int currentLevel;
         HeadsUpDisplay hud;
 
         SpaceBackgroundView sbv;
@@ -80,9 +81,9 @@ namespace SpaceShooter
             this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
             this.playerView = new PlayerView(this.windowWidth, this.windowHeight, sbv.space);
             camera = new Camera(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            level = 1;
+            level = 3;
             hud = new HeadsUpDisplay(level);
-            
+            currentLevel = 1;
 
             base.Initialize();
         }
@@ -140,7 +141,7 @@ namespace SpaceShooter
                 if (hud.level == 3)
                 {
                     //Om spelaren har lite liv kvar så spawnar en destroyer för att avsluta det hela.
-                    if (playerView.health < 40)
+                    if (hud.level == 3)
                     {
                         if (destroyerList.Count < 2)
                         {
@@ -267,6 +268,25 @@ namespace SpaceShooter
                             }
                         }
 
+                        for (int i = 0; i < playerView.bulletList.Count; i++)
+                        {
+                            if (playerView.bulletList[i].bulletHitBox.Intersects(d.enemyHitBox))
+                            {
+                                d.health -= playerBulletDamage;
+                                if (d.health < 1)
+                                {
+                                    explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(d.position.X, d.position.Y)));
+                                }
+                                hud.score += 20;
+                                playerView.bulletList[i].isVisible = false;
+
+                                if (d.health < 1)
+                                {
+                                    d.isVisible = false;
+                                }
+                            }
+
+                        }
 
                         d.update(gameTime);
                     }
@@ -321,6 +341,27 @@ namespace SpaceShooter
                         gameState = State.Gameover;
                     }
 
+                    KeyboardState kState = Keyboard.GetState();
+                    if (kState.IsKeyDown(Keys.P))
+                    {
+                        gameState = State.Pause;
+
+                    }
+
+                    if (hud.level > 3)
+                    {
+                        gameState = State.Win;
+                    }
+
+                    else if(currentLevel + 1 == hud.level)
+                    {
+                        gameState = State.LevelComplete;
+                        playerView.health += 50;
+                        enemyList.Clear();
+                        meteorList.Clear();
+                        destroyerList.Clear();
+                    }
+                    currentLevel = hud.level;
                     break;
                 }
 
@@ -341,6 +382,9 @@ namespace SpaceShooter
                         gameState = State.Menu;
                         playerView.health = 200;
                         hud.score = 0;
+                        enemyList.Clear();
+                        meteorList.Clear();
+                        destroyerList.Clear();
 
                     }
                     else if (kState.IsKeyDown(Keys.Tab))
@@ -349,6 +393,34 @@ namespace SpaceShooter
                     }
                     break;
                 }
+
+                case State.Pause: {
+                    KeyboardState kState = Keyboard.GetState();
+                    if (kState.IsKeyDown(Keys.R))
+                    {
+                        gameState = State.Play;
+                    }
+                    break;
+                }
+
+                case State.LevelComplete: {
+                    KeyboardState kState = Keyboard.GetState();
+                    if (kState.IsKeyDown(Keys.Enter))
+                    {
+                        gameState = State.Play;
+                    }
+                    break;
+                }
+
+                case State.Win:
+                    {
+                        KeyboardState kState = Keyboard.GetState();
+                        if (kState.IsKeyDown(Keys.Enter))
+                        {
+                            gameState = State.Play;
+                        }
+                        break;
+                    }
             }
 
             
@@ -409,6 +481,15 @@ namespace SpaceShooter
                     GraphicsDevice.Clear(Color.Red);
                     break;
                 }
+                case State.Pause: {
+                    GraphicsDevice.Clear(Color.Blue);
+                    break;
+                }
+                case State.Win:
+                    {
+                        GraphicsDevice.Clear(Color.White);
+                        break;
+                    }
             }
 
 

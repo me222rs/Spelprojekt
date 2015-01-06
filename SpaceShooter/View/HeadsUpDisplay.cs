@@ -15,7 +15,7 @@ namespace SpaceShooter.View
         public int width;
         public int height;
         public int level;
-        public int time;
+        public int time = 3600;
         
 
         //Tydligen så har inte Monogame fullt stöd för spritefonts. 
@@ -50,9 +50,10 @@ namespace SpaceShooter.View
 
         public void Update(GameTime gameTime) {
             KeyboardState keyBoard = Keyboard.GetState();
-            time += 1;
-            if (time == 600) {
+            time -= 1;
+            if (time == 0) {
                 level += 1;
+                time = 3600;
             }
 
         }
