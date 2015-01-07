@@ -107,7 +107,7 @@ namespace SpaceShooter.Model
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 this.bulletList = bulletSimulation.PlayerShoot(position, this.bulletList, bulletTexture);
-                //s.shoot.Play();
+                s.shoot.Play();
                 //PlayerShoot();
             }
 

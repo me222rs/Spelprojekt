@@ -23,7 +23,7 @@ namespace SpaceShooter.View
 
         //Monogame är helt värdelöst på att hantera ljud....
         public void LoadContent(ContentManager content) {
-            //shoot = content.Load<SoundEffect>("playershoot");
+            shoot = content.Load<SoundEffect>("pulse");
             //explosion = content.Load<SoundEffect>("explode");
             //backgroundMusic = content.Load<Song>("theme");
         }

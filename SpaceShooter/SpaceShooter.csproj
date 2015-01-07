@@ -135,10 +135,14 @@
     <Folder Include="Controller\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\bgmusic.xnb" />
     <None Include="Content\MyFont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Content\fire2.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\pulse.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
