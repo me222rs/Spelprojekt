@@ -43,11 +43,15 @@ namespace SpaceShooter.View
 
         }
 
-        public void update(GameTime gameTime) {
+        public void update(GameTime gameTime, PlayerModel playerModel)
+        {
             enemyHitBox = new Rectangle((int)position.X, (int)position.Y, enemyTexture.Width, enemyTexture.Height);
-
-            position.Y += speed;
             Random randomX = new Random();
+            position.Y += speed;
+ 
+            
+            
+            
 
             if (position.Y == viewPort.Height) {
                 position.Y = -50;

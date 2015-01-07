@@ -13,7 +13,9 @@ namespace SpaceShooter.View
         private int width;
         private int height;
         private float scaleDiff;
-
+        public Camera() { 
+        
+        }
         public Camera(int width, int height)
         {
                 float ScaleY = (height);

@@ -64,7 +64,7 @@ namespace SpaceShooter.Model
             this.vx = player.xPos * camera.getScale();
             this.vy = player.yPos * camera.getScale();
             this.position = new Vector2(vx, vy);
-            this.health = 20000;
+            this.health = 200;
             this.healthBarPosition = new Vector2(25, 25);
             
         }

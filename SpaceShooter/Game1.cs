@@ -82,9 +82,11 @@ namespace SpaceShooter
         /// </summary>
         protected override void Initialize()
         {
+            
             // TODO: Add your initialization logic here
             this.windowWidth = GraphicsDevice.Viewport.Width;
             this.windowHeight = GraphicsDevice.Viewport.Height;
+            
 
             mv2 = new MeteorView2();
 
@@ -99,7 +101,8 @@ namespace SpaceShooter
             //this.playerView = new PlayerView(this.windowWidth, this.windowHeight, sbv.space);
             playerView2 = new PlayerView2();
             camera = new Camera(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            level = 3;
+            camera.setDimensions(this.windowWidth, this.windowHeight);
+            level = 2;
             hud = new HeadsUpDisplay(level);
             currentLevel = 1;
 
@@ -268,7 +271,7 @@ namespace SpaceShooter
                             }
 
                         }
-                        ev.update(gameTime);
+                        ev.update(gameTime, playerModel);
 
 
                     }
