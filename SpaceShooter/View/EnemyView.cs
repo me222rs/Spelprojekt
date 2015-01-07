@@ -31,7 +31,7 @@ namespace SpaceShooter.View
             bulletList = new List<Bullet>();
             enemyTexture = newTexture;
             bulletTexture = newBulletTexture;
-            health = 40;
+            health = 60;
             currentDifficultyLevel = 1;
             setBulletDelay = 50;
             bulletDelay = 50;

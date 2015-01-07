@@ -24,14 +24,19 @@ namespace SpaceShooter
             Menu, Play, Gameover, Pause, LevelComplete, Win
         }
 
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        PlayerModel playerModel;
         PlayerView playerView;
+        PlayerView2 playerView2;
         MeteorSimulation meteorSimulation;
         Texture2D menuTexture;
+        MeteorView2 mv2;
+
         
         //Listor
-        List<MeteorView> meteorList = new List<MeteorView>();
+        List<MeteorSimulation> meteorList = new List<MeteorSimulation>();
         List<EnemyView> enemyList = new List<EnemyView>();
         List<Destroyer> destroyerList = new List<Destroyer>();
         List<Explosion> explosionList = new List<Explosion>();
@@ -81,16 +86,20 @@ namespace SpaceShooter
             this.windowWidth = GraphicsDevice.Viewport.Width;
             this.windowHeight = GraphicsDevice.Viewport.Height;
 
+            mv2 = new MeteorView2();
+
             //Textures
             menuTexture = Content.Load<Texture2D>("Menu");
             pauseTexture = Content.Load<Texture2D>("Pause");
             gameOverTexture = Content.Load<Texture2D>("GameOver");
 
             this.sbv = new SpaceBackgroundView(this.windowWidth, this.windowHeight);
-            this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
-            this.playerView = new PlayerView(this.windowWidth, this.windowHeight, sbv.space);
+            //this.meteorSimulation = new MeteorSimulation(this.windowWidth, this.windowHeight);
+            playerModel = new PlayerModel(this.windowWidth, this.windowHeight, sbv.space);
+            //this.playerView = new PlayerView(this.windowWidth, this.windowHeight, sbv.space);
+            playerView2 = new PlayerView2();
             camera = new Camera(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            level = 1;
+            level = 3;
             hud = new HeadsUpDisplay(level);
             currentLevel = 1;
 
@@ -106,7 +115,8 @@ namespace SpaceShooter
             // Create a new SpriteBatch, which can be used to draw textures.
             hud.LoadContent(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            this.playerView.LoadContent(this.Content);
+            this.playerModel.LoadContent(this.Content);
+            //this.playerView.LoadContent(this.Content);
             this.sbv.LoadContent(Content);
             menu = Content.Load<Texture2D>("space");
         }
@@ -119,8 +129,9 @@ namespace SpaceShooter
 
             if (meteorList.Count < 5)
             {
-                //Slumpar ut en stor eller liten meteor, dom gör lika mkt skada, men det kan vara svårt att undvika en stor
-                    meteorList.Add(new MeteorView(this.windowWidth, this.windowHeight, Content.Load<Texture2D>("meteorBrown_med1"), new Vector2(randomX, randomY)));
+
+                    //Slumpar ut en stor eller liten meteor, dom gör lika mkt skada, men det kan vara svårt att undvika en stor
+                    meteorList.Add(new MeteorSimulation(this.windowWidth, this.windowHeight, Content.Load<Texture2D>("meteorBrown_med1"), new Vector2(randomX, randomY)));
                 
             }
 
@@ -137,8 +148,8 @@ namespace SpaceShooter
 
         public void LoadEnemies()
         {
-            int randomY = random.Next(-75, -50);
-            int randomX = random.Next(0, GraphicsDevice.Viewport.Width);
+            int randomY = random.Next(-75, -30);
+            int randomX = random.Next(-50, GraphicsDevice.Viewport.Width);
 
             if(hud.level == 2 || hud.level == 3){
                 
@@ -152,7 +163,7 @@ namespace SpaceShooter
                     //Om spelaren har lite liv kvar så spawnar en destroyer för att avsluta det hela.
                     if (hud.level == 3)
                     {
-                        if (destroyerList.Count < 2)
+                        if (destroyerList.Count < 1)
                         {
                             randomY = random.Next(-75, -50);
                             randomX = random.Next(-50, GraphicsDevice.Viewport.Width - 50);
@@ -216,29 +227,31 @@ namespace SpaceShooter
             switch (gameState) {
                 case State.Play: {
 
+                    //collision.CheckEnemyCollision(enemyList);
+
                     //Hanerar kollision mellan fiendeskepp och spelarskepp
                     foreach (EnemyView ev in enemyList)
                     {
-                        if (ev.enemyHitBox.Intersects(playerView.shipHitBox))
+                        if (ev.enemyHitBox.Intersects(playerModel.shipHitBox))
                         {
-                            playerView.health -= 40;
+                            playerModel.health -= 40;
                             ev.isVisible = false;
                         }
 
                         //Om spelarskeppet kolliderar med en fiendekula
                         for (int i = 0; i < ev.bulletList.Count; i++)
                         {
-                            if (playerView.shipHitBox.Intersects(ev.bulletList[i].bulletHitBox))
+                            if (playerModel.shipHitBox.Intersects(ev.bulletList[i].bulletHitBox))
                             {
-                                playerView.health -= enemyBulletDamage;
+                                playerModel.health -= enemyBulletDamage;
                                 ev.bulletList[i].isVisible = false;
                             }
                         }
 
                         //Om spelarkulorna kolliderar med fiendeskepp
-                        for (int i = 0; i < playerView.bulletList.Count; i++)
+                        for (int i = 0; i < playerModel.bulletList.Count; i++)
                         {
-                            if (playerView.bulletList[i].bulletHitBox.Intersects(ev.enemyHitBox))
+                            if (playerModel.bulletList[i].bulletHitBox.Intersects(ev.enemyHitBox))
                             {
                                 ev.health -= playerBulletDamage;
                                 if (ev.health < 1)
@@ -246,7 +259,7 @@ namespace SpaceShooter
                                     explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(ev.position.X, ev.position.Y)));
                                 }
                                 hud.score += 20;
-                                playerView.bulletList[i].isVisible = false;
+                                playerModel.bulletList[i].isVisible = false;
 
                                 if (ev.health < 1)
                                 {
@@ -262,24 +275,24 @@ namespace SpaceShooter
 
                     foreach (Destroyer d in destroyerList)
                     {
-                        if (d.enemyHitBox.Intersects(playerView.shipHitBox))
+                        if (d.enemyHitBox.Intersects(playerModel.shipHitBox))
                         {
-                            playerView.health -= 80;
+                            playerModel.health -= 80;
                             d.isVisible = false;
                         }
 
                         for (int i = 0; i < d.bulletList.Count; i++)
                         {
-                            if (playerView.shipHitBox.Intersects(d.bulletList[i].bulletHitBox))
+                            if (playerModel.shipHitBox.Intersects(d.bulletList[i].bulletHitBox))
                             {
-                                playerView.health -= enemyBulletDamage;
+                                playerModel.health -= enemyBulletDamage;
                                 d.bulletList[i].isVisible = false;
                             }
                         }
 
-                        for (int i = 0; i < playerView.bulletList.Count; i++)
+                        for (int i = 0; i < playerModel.bulletList.Count; i++)
                         {
-                            if (playerView.bulletList[i].bulletHitBox.Intersects(d.enemyHitBox))
+                            if (playerModel.bulletList[i].bulletHitBox.Intersects(d.enemyHitBox))
                             {
                                 d.health -= playerBulletDamage;
                                 if (d.health < 1)
@@ -287,7 +300,7 @@ namespace SpaceShooter
                                     explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(d.position.X, d.position.Y)));
                                 }
                                 hud.score += 20;
-                                playerView.bulletList[i].isVisible = false;
+                                playerModel.bulletList[i].isVisible = false;
 
                                 if (d.health < 1)
                                 {
@@ -297,7 +310,7 @@ namespace SpaceShooter
 
                         }
 
-                        d.update(gameTime);
+                        d.update(gameTime, playerModel);
                     }
 
 
@@ -307,13 +320,13 @@ namespace SpaceShooter
                     }
 
                     // TODO: Add your update logic here
-                    foreach (MeteorView m in meteorList)
+                    foreach (MeteorSimulation m in meteorList)
                     {
                         // Kollar om meteorerna kolliderar med skeppet och i så fall tas meteorerna bort
-                        if (m.meteorHitBox.Intersects(playerView.shipHitBox))
+                        if (m.meteorHitBox.Intersects(playerModel.shipHitBox))
                         {
                             hud.score += 5;
-                            playerView.health -= 20;
+                            playerModel.health -= 20;
                             m.isVisible = false;
                         }
 
@@ -321,14 +334,14 @@ namespace SpaceShooter
 
 
                         // Kollar om meteorerna kolliderar med kulorna och i så fall tas de bort
-                        for (int i = 0; i < playerView.bulletList.Count; i++)
+                        for (int i = 0; i < playerModel.bulletList.Count; i++)
                         {
-                            if (m.meteorHitBox.Intersects(playerView.bulletList[i].bulletHitBox))
+                            if (m.meteorHitBox.Intersects(playerModel.bulletList[i].bulletHitBox))
                             {
                                 explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(m.position.X, m.position.Y)));
                                 hud.score += 5;
                                 m.isVisible = false;
-                                playerView.bulletList.ElementAt(i).isVisible = false;
+                                playerModel.bulletList.ElementAt(i).isVisible = false;
                             }
                         }
 
@@ -341,11 +354,11 @@ namespace SpaceShooter
                     this.sbv.Update(gameTime);
                     LoadMeteors();
                     LoadEnemies();
-                    this.meteorSimulation.Update(gameTime);
-                    this.playerView.Update(gameTime);
+                    //this.meteorSimulation.Update(gameTime);
+                    this.playerModel.Update(gameTime);
                     Explosions();
 
-                    if (playerView.health < 1)
+                    if (playerModel.health < 1)
                     {
                         gameState = State.Gameover;
                     }
@@ -365,7 +378,7 @@ namespace SpaceShooter
                     else if(currentLevel + 1 == hud.level)
                     {
                         gameState = State.LevelComplete;
-                        playerView.health += 50;
+                        playerModel.health += 50;
                         enemyList.Clear();
                         meteorList.Clear();
                         destroyerList.Clear();
@@ -386,14 +399,16 @@ namespace SpaceShooter
                 case State.Gameover: 
                 {
                     KeyboardState kState = Keyboard.GetState();
-                    if (kState.IsKeyDown(Keys.Space))
+                    if (kState.IsKeyDown(Keys.Enter))
                     {
                         gameState = State.Menu;
-                        playerView.health = 200;
+                        playerModel.health = 200;
                         hud.score = 0;
                         enemyList.Clear();
                         meteorList.Clear();
                         destroyerList.Clear();
+                        playerModel.position.Y = graphics.PreferredBackBufferHeight + 100;
+                        hud.time = 1800;
 
                     }
                     else if (kState.IsKeyDown(Keys.Tab))
@@ -405,7 +420,7 @@ namespace SpaceShooter
 
                 case State.Pause: {
                     KeyboardState kState = Keyboard.GetState();
-                    if (kState.IsKeyDown(Keys.R))
+                    if (kState.IsKeyDown(Keys.Enter))
                     {
                         gameState = State.Play;
                     }
@@ -458,6 +473,7 @@ namespace SpaceShooter
             switch (gameState) {
                 case State.Play: 
                 {
+                    
                     sbv.Draw(spriteBatch);
                     hud.Draw(spriteBatch);
                     foreach (Explosion e in explosionList)
@@ -465,11 +481,12 @@ namespace SpaceShooter
                         e.Draw(spriteBatch);
                     }
 
-                    foreach (MeteorView mv in meteorList)
+                    foreach (MeteorSimulation mv in meteorList)
                     {
-                        mv.Draw(spriteBatch);
+                        
+                        mv2.Draw(spriteBatch, mv.meteorTexture, mv.position, mv.isVisible);
                     }
-                    playerView.Draw(spriteBatch);
+                    playerView2.Draw(spriteBatch, playerModel.shipTexture, playerModel.position, playerModel.bulletList, playerModel.healthBox, playerModel.healthTexture, playerModel.bulletTexture);
                     foreach (EnemyView ev in enemyList)
                     {
                         ev.Draw(spriteBatch);
@@ -500,6 +517,8 @@ namespace SpaceShooter
                     SpriteEffects.None, 0);
 
                     GraphicsDevice.Clear(Color.Red);
+
+                    hud.DrawScore(spriteBatch);
                     break;
                 }
                 case State.Pause: {

@@ -35,13 +35,14 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controller\MeteorController.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Model\Bullet.cs" />
     <Compile Include="Model\BulletSimulation.cs" />
+    <Compile Include="Model\Collision.cs" />
     <Compile Include="Model\Meteor.cs" />
     <Compile Include="Model\MeteorSimulation.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\PlayerModel.cs" />
     <Compile Include="Model\PlayerSimulation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,7 +53,9 @@
     <Compile Include="View\Explosion.cs" />
     <Compile Include="View\HeadsUpDisplay.cs" />
     <Compile Include="View\MeteorView.cs" />
+    <Compile Include="View\MeteorView2.cs" />
     <Compile Include="View\PlayerView.cs" />
+    <Compile Include="View\PlayerView2.cs" />
     <Compile Include="View\Sound.cs" />
     <Compile Include="View\SpaceBackgroundView.cs" />
   </ItemGroup>
@@ -128,7 +131,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controller\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Content\MyFont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

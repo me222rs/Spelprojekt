@@ -15,7 +15,7 @@ namespace SpaceShooter.View
         public int width;
         public int height;
         public int level;
-        public int time = 3600;
+        public int time = 1800;
         
 
         //Tydligen så har inte Monogame fullt stöd för spritefonts. 
@@ -30,6 +30,7 @@ namespace SpaceShooter.View
         public Vector2 hpPosition;
         public Vector2 levelPosition;
         public Vector2 timePosition;
+        public Vector2 finalScorePosition;
 
         public HeadsUpDisplay(int level) {
             score = 0;
@@ -42,6 +43,7 @@ namespace SpaceShooter.View
             levelPosition = new Vector2(0, 75);
             timePosition = new Vector2(0, 100);
             this.level = level;
+            finalScorePosition = new Vector2(200, 300);
         }
         
         public void LoadContent(ContentManager Content) {
@@ -53,9 +55,13 @@ namespace SpaceShooter.View
             time -= 1;
             if (time == 0) {
                 level += 1;
-                time = 3600;
+                time = 1800;
             }
 
+        }
+
+        public void DrawScore(SpriteBatch spritebatch) {
+            spritebatch.DrawString(spriteFont, "Your score was " + score, finalScorePosition, Color.White);
         }
 
         public void Draw(SpriteBatch spritebatch)

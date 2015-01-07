@@ -23,6 +23,8 @@ namespace SpaceShooter.View
         public List<Bullet> bulletList;
         BulletView bv;
         Viewport viewPort;
+        PlayerModel pv;
+        int timer;
 
 
 
@@ -40,18 +42,26 @@ namespace SpaceShooter.View
             position = newPosition;
             speed = 2;
             this.viewPort = viewPort;
+            timer = 0;
 
         }
 
-        public void update(GameTime gameTime) {
+        public void update(GameTime gameTime, PlayerModel playerModel) {
+            timer += 1;
             enemyHitBox = new Rectangle((int)position.X, (int)position.Y, enemyTexture.Width, enemyTexture.Height);
+            if(position.Y < viewPort.Height / 3){
+                position.X = playerModel.position.X;
+            }
 
+
+            
+            
             position.Y += speed;
             
             Random randomX = new Random();
 
-            if (position.Y == viewPort.Height) {
-                position.Y = -50;
+            if (position.Y >= viewPort.Height) {
+                position.Y = -75;
                 position.X = randomX.Next(enemyTexture.Width, viewPort.Width);
             }
             EnemyShootBullets();
