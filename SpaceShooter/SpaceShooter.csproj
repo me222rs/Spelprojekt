@@ -39,6 +39,7 @@
     <Compile Include="Model\Bullet.cs" />
     <Compile Include="Model\BulletSimulation.cs" />
     <Compile Include="Model\Collision.cs" />
+    <Compile Include="Model\DestroyerModel.cs" />
     <Compile Include="Model\EnemyModel.cs" />
     <Compile Include="Model\Meteor.cs" />
     <Compile Include="Model\MeteorSimulation.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="View\BulletView.cs" />
     <Compile Include="View\Camera.cs" />
     <Compile Include="View\Destroyer.cs" />
+    <Compile Include="View\DestroyerView.cs" />
     <Compile Include="View\EnemyView.cs" />
     <Compile Include="View\EnemyView2.cs" />
     <Compile Include="View\Explosion.cs" />

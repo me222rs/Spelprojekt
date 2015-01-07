@@ -34,12 +34,13 @@ namespace SpaceShooter
         Texture2D menuTexture;
         MeteorView2 mv2;
         EnemyView2 ev2;
+        DestroyerView dv;
 
         
         //Listor
         List<MeteorSimulation> meteorList = new List<MeteorSimulation>();
         List<EnemyModel> enemyList = new List<EnemyModel>();
-        List<Destroyer> destroyerList = new List<Destroyer>();
+        List<DestroyerModel> destroyerList = new List<DestroyerModel>();
         List<Explosion> explosionList = new List<Explosion>();
 
         //Texturer
@@ -90,7 +91,7 @@ namespace SpaceShooter
 
             ev2 = new EnemyView2();
             mv2 = new MeteorView2();
-
+            dv = new DestroyerView();
             //Textures
             menuTexture = Content.Load<Texture2D>("Menu");
             pauseTexture = Content.Load<Texture2D>("Pause");
@@ -105,7 +106,7 @@ namespace SpaceShooter
             camera.setDimensions(this.windowWidth, this.windowHeight);
             level = 2;
             hud = new HeadsUpDisplay(level);
-            currentLevel = 1;
+            currentLevel = 3;
 
             base.Initialize();
         }
@@ -171,7 +172,7 @@ namespace SpaceShooter
                         {
                             randomY = random.Next(-75, -50);
                             randomX = random.Next(-50, GraphicsDevice.Viewport.Width - 50);
-                            destroyerList.Add(new Destroyer(Content.Load<Texture2D>("enemyBlack1"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
+                            destroyerList.Add(new DestroyerModel(Content.Load<Texture2D>("enemyBlack1"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
                         }
 
                     }
@@ -277,7 +278,7 @@ namespace SpaceShooter
 
                     }
 
-                    foreach (Destroyer d in destroyerList)
+                    foreach (DestroyerModel d in destroyerList)
                     {
                         if (d.enemyHitBox.Intersects(playerModel.shipHitBox))
                         {
@@ -495,9 +496,9 @@ namespace SpaceShooter
                     {
                         ev2.Draw(spriteBatch, ev.enemyTexture, ev.position, ev.bulletList, ev.bulletTexture);
                     }
-                    foreach (Destroyer d in destroyerList)
+                    foreach (DestroyerModel d in destroyerList)
                     {
-                        d.Draw(spriteBatch);
+                        dv.Draw(spriteBatch, d.enemyTexture, d.position, d.bulletList, d.bulletTexture);
                     }
                     break;
                 }

@@ -61,6 +61,8 @@ namespace SpaceShooter.Model
             this.diameter = camera.getScale() * player.diameter;
 
             //Spelarens position
+            //this.vx = player.xPos;
+            //this.vy = player.yPos;
             this.vx = player.xPos * camera.getScale();
             this.vy = player.yPos * camera.getScale();
             this.position = new Vector2(vx, vy);
