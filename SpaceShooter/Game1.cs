@@ -33,11 +33,12 @@ namespace SpaceShooter
         MeteorSimulation meteorSimulation;
         Texture2D menuTexture;
         MeteorView2 mv2;
+        EnemyView2 ev2;
 
         
         //Listor
         List<MeteorSimulation> meteorList = new List<MeteorSimulation>();
-        List<EnemyView> enemyList = new List<EnemyView>();
+        List<EnemyModel> enemyList = new List<EnemyModel>();
         List<Destroyer> destroyerList = new List<Destroyer>();
         List<Explosion> explosionList = new List<Explosion>();
 
@@ -86,8 +87,8 @@ namespace SpaceShooter
             // TODO: Add your initialization logic here
             this.windowWidth = GraphicsDevice.Viewport.Width;
             this.windowHeight = GraphicsDevice.Viewport.Height;
-            
 
+            ev2 = new EnemyView2();
             mv2 = new MeteorView2();
 
             //Textures
@@ -158,7 +159,7 @@ namespace SpaceShooter
                 
                 if (enemyList.Count < 3)
                 {
-                    enemyList.Add(new EnemyView(Content.Load<Texture2D>("enemyRed3"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
+                    enemyList.Add(new EnemyModel(Content.Load<Texture2D>("enemyRed3"), new Vector2(randomX, randomY), Content.Load<Texture2D>("playerbullet"), GraphicsDevice.Viewport));
                 }
 
                 if (hud.level == 3)
@@ -233,7 +234,7 @@ namespace SpaceShooter
                     //collision.CheckEnemyCollision(enemyList);
 
                     //Hanerar kollision mellan fiendeskepp och spelarskepp
-                    foreach (EnemyView ev in enemyList)
+                    foreach (EnemyModel ev in enemyList)
                     {
                         if (ev.enemyHitBox.Intersects(playerModel.shipHitBox))
                         {
@@ -490,9 +491,9 @@ namespace SpaceShooter
                         mv2.Draw(spriteBatch, mv.meteorTexture, mv.position, mv.isVisible);
                     }
                     playerView2.Draw(spriteBatch, playerModel.shipTexture, playerModel.position, playerModel.bulletList, playerModel.healthBox, playerModel.healthTexture, playerModel.bulletTexture);
-                    foreach (EnemyView ev in enemyList)
+                    foreach (EnemyModel ev in enemyList)
                     {
-                        ev.Draw(spriteBatch);
+                        ev2.Draw(spriteBatch, ev.enemyTexture, ev.position, ev.bulletList, ev.bulletTexture);
                     }
                     foreach (Destroyer d in destroyerList)
                     {
