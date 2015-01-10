@@ -104,7 +104,7 @@ namespace SpaceShooter
             playerView2 = new PlayerView2();
             camera = new Camera(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             camera.setDimensions(this.windowWidth, this.windowHeight);
-            level = 2;
+            level = 1;
             hud = new HeadsUpDisplay(level);
             currentLevel = 3;
 
