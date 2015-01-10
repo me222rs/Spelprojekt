@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using SpaceShooter.Model;
 using SpaceShooter.View;
 using System.Linq;
+using Microsoft.Xna.Framework.Media;
 #endregion
 
 namespace SpaceShooter
@@ -35,7 +36,8 @@ namespace SpaceShooter
         MeteorView2 mv2;
         EnemyView2 ev2;
         DestroyerView dv;
-
+        //Explosion ex;
+        Sound s;
         
         //Listor
         List<MeteorSimulation> meteorList = new List<MeteorSimulation>();
@@ -84,11 +86,12 @@ namespace SpaceShooter
         /// </summary>
         protected override void Initialize()
         {
-            
+            s = new Sound();
             // TODO: Add your initialization logic here
             this.windowWidth = GraphicsDevice.Viewport.Width;
             this.windowHeight = GraphicsDevice.Viewport.Height;
 
+            //ex = new Explosion();
             ev2 = new EnemyView2();
             mv2 = new MeteorView2();
             dv = new DestroyerView();
@@ -117,6 +120,7 @@ namespace SpaceShooter
         /// </summary>
         protected override void LoadContent()
         {
+            s.LoadContent(Content);
             // Create a new SpriteBatch, which can be used to draw textures.
             hud.LoadContent(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -124,6 +128,9 @@ namespace SpaceShooter
             //this.playerView.LoadContent(this.Content);
             this.sbv.LoadContent(Content);
             menu = Content.Load<Texture2D>("space");
+            //ex.LoadContent(Content);
+            //MediaPlayer.Play(s.backgroundMusic);
+            s.backgroundMusic.Play();
         }
 
         
@@ -231,7 +238,7 @@ namespace SpaceShooter
 
             switch (gameState) {
                 case State.Play: {
-
+                    
                     //collision.CheckEnemyCollision(enemyList);
 
                     //Hanerar kollision mellan fiendeskepp och spelarskepp
@@ -262,6 +269,7 @@ namespace SpaceShooter
                                 if (ev.health < 1)
                                 {
                                     explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(ev.position.X, ev.position.Y)));
+                                    s.explosion.Play();
                                 }
                                 hud.score += 20;
                                 playerModel.bulletList[i].isVisible = false;
@@ -303,6 +311,7 @@ namespace SpaceShooter
                                 if (d.health < 1)
                                 {
                                     explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(d.position.X, d.position.Y)));
+                                    s.explosion.Play();
                                 }
                                 hud.score += 20;
                                 playerModel.bulletList[i].isVisible = false;
@@ -343,7 +352,9 @@ namespace SpaceShooter
                         {
                             if (m.meteorHitBox.Intersects(playerModel.bulletList[i].bulletHitBox))
                             {
+
                                 explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(m.position.X, m.position.Y)));
+                                s.explosion.Play();
                                 hud.score += 5;
                                 m.isVisible = false;
                                 playerModel.bulletList.ElementAt(i).isVisible = false;
@@ -365,6 +376,9 @@ namespace SpaceShooter
 
                     if (playerModel.health < 1)
                     {
+                        explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(playerModel.position.X, playerModel.position.Y)));
+                        s.explosion.Play();
+
                         gameState = State.Gameover;
                     }
 

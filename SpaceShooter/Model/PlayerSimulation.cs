@@ -15,7 +15,7 @@ namespace SpaceShooter.Model
     {
         public List<Bullet> bulletList;
         public int bulletDelay = 1;
-        
+
 
         public Vector2 isCollidingWithBorders(Vector2 v, Vector2 screenposMax, Texture2D shipTexture, Texture2D sbv) {
             //Kollision med kanterna

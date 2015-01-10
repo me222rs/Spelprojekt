@@ -21,6 +21,7 @@ namespace SpaceShooter.View
         public int spriteHeight;
         public Rectangle srcRect;
         public bool isVisible;
+        //Sound s = new Sound();
 
         public Explosion(Texture2D newTexture, Vector2 newPosition) {
             position = newPosition;
@@ -31,12 +32,16 @@ namespace SpaceShooter.View
             spriteWidth = 128;
             spriteHeight = 128;
             isVisible = true;
-        }
-
-        public void LoadContent(ContentManager content) { 
             
         }
+        public Explosion() { 
+        
+        }
 
+        public void LoadContent(ContentManager content) {
+            //s.LoadContent(content);
+        }
+ 
         public void Update(GameTime gameTime) {
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if (timer > interval) {
@@ -56,6 +61,7 @@ namespace SpaceShooter.View
         public void Draw(SpriteBatch spriteBatch) {
             if (isVisible) {
                 spriteBatch.Draw(texture, position, srcRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                //s.explosion.Play();
             }
         }
 

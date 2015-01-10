@@ -12,7 +12,7 @@ namespace SpaceShooter.View
     {
         public SoundEffect shoot;
         public SoundEffect explosion;
-        public Song backgroundMusic;
+        public SoundEffect backgroundMusic;
 
         public Sound() {
             shoot = null;
@@ -21,11 +21,15 @@ namespace SpaceShooter.View
         }
 
 
-        //Monogame är helt värdelöst på att hantera ljud....
+        //Monogame är helt värdelöst på att hantera ljud.... och det verkar vara vääääldigt många som har samma uppfattning på internet...
+        //Går ej att spela ljud i vilket format som helst utan det måste vara xnb och inget annat.
+        //Att spela bakgrundsmusiken med mediaplayer fungerar inte alls (fungerar om jag spelar upp den som soundeffect, men då går det inte pausa musiken)
+        //Aldrig mer monogame förrens de har fixat problemen.
         public void LoadContent(ContentManager content) {
             shoot = content.Load<SoundEffect>("pulse");
-            //explosion = content.Load<SoundEffect>("explode");
-            //backgroundMusic = content.Load<Song>("theme");
+            explosion = content.Load<SoundEffect>("fire2");
+            //backgroundMusic = content.Load<SoundEffect>("bgmusic");
+            
         }
     }
 }

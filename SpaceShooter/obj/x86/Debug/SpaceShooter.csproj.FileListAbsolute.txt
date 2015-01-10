@@ -47,3 +47,5 @@ C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Cont
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\GameOver.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\Pause.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\pulse.xnb
+C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\boom1.xnb
+C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\bgmusic.xnb

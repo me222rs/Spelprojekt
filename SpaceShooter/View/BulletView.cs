@@ -11,7 +11,7 @@ namespace SpaceShooter.View
     {
         //public Rectangle bulletHitBox;
         public Texture2D bullet;
-        
+        //Sound s = new Sound();
 
 
         public BulletView(Texture2D bullet) {
@@ -21,6 +21,7 @@ namespace SpaceShooter.View
         public void Draw(SpriteBatch spriteBatch, Vector2 pos)
         {
             spriteBatch.Draw(bullet, pos, Color.White);
+              //s.shoot.Play();
         }
     }
 }

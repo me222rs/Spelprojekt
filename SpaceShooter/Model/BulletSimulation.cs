@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceShooter.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace SpaceShooter.Model
             this.bulletTexture = bulletTexture;
         }
 
-        public List<Bullet> PlayerShoot(Vector2 position, List<Bullet>bulletList, Texture2D bulletTexture)
+        public List<Bullet> PlayerShoot(Vector2 position, List<Bullet>bulletList, Texture2D bulletTexture, Sound s)
          {
 
             this.bulletList = bulletList;
@@ -40,6 +41,7 @@ namespace SpaceShooter.Model
                 if (bulletList.Count() < 20)
                 {
                     bulletList.Add(newBullet);
+                    s.shoot.Play();
                 }
             }
 

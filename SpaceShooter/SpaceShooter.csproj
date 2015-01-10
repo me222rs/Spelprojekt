@@ -139,7 +139,12 @@
     <Folder Include="Controller\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\bgmusic.xnb" />
+    <None Include="Content\bgmusic.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\boom1.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Content\MyFont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
