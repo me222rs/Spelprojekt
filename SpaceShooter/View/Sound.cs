@@ -26,6 +26,7 @@ namespace SpaceShooter.View
         //Att spela bakgrundsmusiken med mediaplayer fungerar inte alls (fungerar om jag spelar upp den som soundeffect, men då går det inte pausa musiken)
         //Aldrig mer monogame förrens de har fixat problemen.
         public void LoadContent(ContentManager content) {
+            //Fanns väldigt få ljud att ladda ner på internet som är i rätt format
             shoot = content.Load<SoundEffect>("pulse");
             explosion = content.Load<SoundEffect>("fire2");
             //backgroundMusic = content.Load<SoundEffect>("bgmusic");

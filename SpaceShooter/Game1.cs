@@ -25,6 +25,7 @@ namespace SpaceShooter
             Menu, Play, Gameover, Pause, LevelComplete, Win, Instructions
         }
 
+        //Alla texturer utom dom i menyerna är tagna från http://opengameart.org/
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -34,7 +35,6 @@ namespace SpaceShooter
         MeteorView2 mv2;
         EnemyView2 ev2;
         DestroyerView dv;
-        //Explosion ex;
         Sound s;
         
         //Listor
@@ -130,7 +130,6 @@ namespace SpaceShooter
             hud.LoadContent(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             this.playerModel.LoadContent(this.Content);
-            //this.playerView.LoadContent(this.Content);
             this.sbv.LoadContent(Content);
             menu = Content.Load<Texture2D>("space");
             //ex.LoadContent(Content);
@@ -259,6 +258,7 @@ namespace SpaceShooter
                         //Om spelarskeppet kolliderar med en fiendekula
                         for (int i = 0; i < ev.bulletList.Count; i++)
                         {
+                            //Wow så enkelt det var att kolla kollisioner med Intersects
                             if (playerModel.shipHitBox.Intersects(ev.bulletList[i].bulletHitBox))
                             {
                                 playerModel.health -= enemyBulletDamage;
@@ -524,10 +524,8 @@ namespace SpaceShooter
                     {
                         e.Draw(spriteBatch);
                     }
-
                     foreach (MeteorSimulation mv in meteorList)
                     {
-                        
                         mv2.Draw(spriteBatch, mv.meteorTexture, mv.position, mv.isVisible);
                     }
                     playerView2.Draw(spriteBatch, playerModel.shipTexture, playerModel.position, playerModel.bulletList, playerModel.healthBox, playerModel.healthTexture, playerModel.bulletTexture);

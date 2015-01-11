@@ -38,7 +38,7 @@ namespace SpaceShooter.Model
             isVisible = true;
             bv = new BulletView(bulletTexture);
             position = newPosition;
-            speed = 1;
+            speed = 2;
             this.viewPort = viewPort;
 
         }
