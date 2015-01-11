@@ -11,57 +11,58 @@ namespace SpaceShooter.View
 {
     class Explosion
     {
+        public int frame;
+        public int width;
         public Vector2 position;
-        public Texture2D texture;
-        public float timer;
-        public float interval;
+        public Texture2D explosionTexture;
+        public int time;
+        public int speed;
         public Vector2 origin;
-        public int currentFrame;
-        public int spriteWidth;
-        public int spriteHeight;
-        public Rectangle srcRect;
+        public int height;
+        public Rectangle sourceRect;
         public bool isVisible;
-        //Sound s = new Sound();
+        public int images;
 
+        //En enkel metod som ritar ut en explosion
+        //Allt man behöver göra är att sätta hur hög och bred varje bild är i spriten så ritar den ut
         public Explosion(Texture2D newTexture, Vector2 newPosition) {
+            time = 0;
+            //Lägre nummer = snabbare animering
+            speed = 20;
+            frame = 1;
             position = newPosition;
-            texture = newTexture;
-            timer = 0f;
-            interval = 40f;
-            currentFrame = 1;
-            spriteWidth = 128;
-            spriteHeight = 128;
+            explosionTexture = newTexture;
+            //Sätt bredd och höjd här
+            width = 128;
+            height = 128;
             isVisible = true;
-            
+            images = explosionTexture.Width / width;
         }
         public Explosion() { 
         
         }
 
-        public void LoadContent(ContentManager content) {
-            //s.LoadContent(content);
-        }
+
  
         public void Update(GameTime gameTime) {
-            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (timer > interval) {
-                currentFrame++;
-                timer = 0;
+            time += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (time > speed) {
+                frame++;
+                time = 0;
             }
 
-            if(currentFrame == 17){
+            if(frame == images){
+                frame = 0;
                 isVisible = false;
-                currentFrame = 0;
             }
 
-            srcRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
-            origin = new Vector2(srcRect.Width / 2, srcRect.Height / 2);
+            sourceRect = new Rectangle(frame * width, 0, width, height);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
         }
 
         public void Draw(SpriteBatch spriteBatch) {
             if (isVisible) {
-                spriteBatch.Draw(texture, position, srcRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
-                //s.explosion.Play();
+                spriteBatch.Draw(explosionTexture, position, sourceRect, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
             }
         }
 

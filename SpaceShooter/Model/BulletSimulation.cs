@@ -14,12 +14,13 @@ namespace SpaceShooter.Model
     class BulletSimulation
     {
         public List<Bullet> bulletList;
-        public int bulletDelay = 1;
+        // Idén med att göra delay på detta sättet fick jag härifrån
+        //http://haxecoder.com/post.php?id=33
+        public int delay = 1;
         public Texture2D bulletTexture;
 
 
         public BulletSimulation(Texture2D bulletTexture) {
-            //bulletList = new List<Bullet>();
             this.bulletTexture = bulletTexture;
         }
 
@@ -28,26 +29,30 @@ namespace SpaceShooter.Model
 
             this.bulletList = bulletList;
 
-
-            if (bulletDelay >= 0)
+            // delay hindrar spelaren från att kunna hålla skjutknappen nere och skjuta så fort det bara går.
+            // Med delay så tar det en viss tid mellan varje skott
+            if (delay >= 0)
             {
-                bulletDelay--;
+                delay--;
             }
-            if (bulletDelay <= 0)
+            if (delay <= 0)
             {
-                Bullet newBullet = new Bullet(bulletTexture);
-                newBullet.position = new Vector2(position.X + 50.5f - bulletTexture.Width / 2, position.Y);
-                newBullet.isVisible = true;
-                if (bulletList.Count() < 20)
+                Bullet bullet = new Bullet(bulletTexture);
+                bullet.position = new Vector2(position.X + 50.5f - bulletTexture.Width / 2, position.Y);
+                bullet.isVisible = true;
+
+
+                //Om listan med kulorna är för stor så kommer man inte kunna skjuta förrens några av de existerande kulorna har försvunnit
+                if (bulletList.Count() < 50)
                 {
-                    bulletList.Add(newBullet);
+                    bulletList.Add(bullet);
                     s.shoot.Play();
                 }
             }
 
-            if (bulletDelay == 0)
+            if (delay == 0)
             {
-                bulletDelay = 10;
+                delay = 10;
             }
 
             return bulletList;
@@ -55,6 +60,8 @@ namespace SpaceShooter.Model
 
         public List<Bullet> UpdateBullet(List<Bullet> bulletList)
         {
+            //Fick lite inspiration från denna länken
+            //http://www.sweclockers.com/forum/10-programmering-och-digitalt-skapande/1161650-c-varfor-laggar-mitt-spel/index2.html
             foreach (Bullet bullet in bulletList.ToList())
             {
                 // Träffytan för kulorna

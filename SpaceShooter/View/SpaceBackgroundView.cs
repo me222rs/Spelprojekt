@@ -8,14 +8,13 @@ using System.Text;
 
 namespace SpaceShooter.View
 {
-    /// <summary>
-    /// Ritar ut den rullande bakgrunden, endast för visuella effekter, därför placerat i en vy
-    /// </summary>
+
     class SpaceBackgroundView
     {
         public Texture2D space;
-        public Vector2 bgPosition1, bgPosition2;
-        public float speed = 5.0f;
+        public Vector2 position1;
+        public Vector2 position2;
+        public float speed = 10.0f;
         private int width;
         private int height;
 
@@ -23,27 +22,29 @@ namespace SpaceShooter.View
             this.height = height;
             this.width = width;
             this.space = null;
-            this.bgPosition1 = new Vector2(0, 0);
-            this.bgPosition2 = new Vector2(0, -this.height);
+            this.position1 = new Vector2(0, 0);
+            this.position2 = new Vector2(0, -this.height);
         }
 
         public void LoadContent(ContentManager content) {
-            space = content.Load<Texture2D>("space");
+            space = content.Load<Texture2D>("space3");
         }
 
         public void Update(GameTime gameTime) {
-            bgPosition1.Y = bgPosition1.Y + this.speed;
-            bgPosition2.Y = bgPosition2.Y + this.speed;
+            position1.Y = position1.Y + this.speed;
+            position2.Y = position2.Y + this.speed;
 
-            if(bgPosition1.Y >= this.height){
-                bgPosition1.Y = 0;
-                bgPosition2.Y = -this.height;
+            if(position1.Y >= this.height){
+                position1.Y = 0;
+                position2.Y = -this.height;
             }
         }
 
+        //Ritar ut samma bakgrund
+        //Den ena ritas ut ovanpå den andra och därmed får man en typ oändlig bakgrund
         public void Draw(SpriteBatch spriteBatch) {
-            spriteBatch.Draw(space, bgPosition1, Color.White);
-            spriteBatch.Draw(space, bgPosition2, Color.White);
+            spriteBatch.Draw(space, position1, Color.White);
+            spriteBatch.Draw(space, position2, Color.White);
         }
 
 

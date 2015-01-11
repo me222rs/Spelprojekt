@@ -12,12 +12,11 @@ namespace SpaceShooter.Model
 {
     class PlayerModel
     {
-                private int windowWidth;
+        private int windowWidth;
         private int windowHeight;
         Player player;
         Camera camera;
         BulletSimulation bulletSimulation;
-        //Bullet bullet;
         public Vector2 position;
         public Vector2 healthBarPosition;
         public Texture2D shipTexture;
@@ -28,7 +27,6 @@ namespace SpaceShooter.Model
         public int health;
         public bool isColliding;
         public float speed;
-        public float scale;
         private float vx;
         private float vy;
         private float diameter;
@@ -61,8 +59,6 @@ namespace SpaceShooter.Model
             this.diameter = camera.getScale() * player.diameter;
 
             //Spelarens position
-            //this.vx = player.xPos;
-            //this.vy = player.yPos;
             this.vx = player.xPos * camera.getScale();
             this.vy = player.yPos * camera.getScale();
             this.position = new Vector2(vx, vy);
@@ -78,7 +74,6 @@ namespace SpaceShooter.Model
             this.healthTexture = Content.Load<Texture2D>("healthbar");
             bulletView = new BulletView(bulletTexture);
             s.LoadContent(Content);
-            //bullet = new Bullet(bulletTexture);
         }
 
         public void Update(GameTime gameTime)
@@ -109,17 +104,10 @@ namespace SpaceShooter.Model
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 this.bulletList = bulletSimulation.PlayerShoot(position, this.bulletList, bulletTexture, s);
-                //s.shoot.Play();
-                //PlayerShoot();
             }
 
             this.bulletList = bulletSimulation.UpdateBullet(this.bulletList);
-            //UpdateBullet();
 
-
-            Vector2 screenposMax;
-            Vector2 modelpos = new Vector2(1.0f, 1.0f);
-            screenposMax = camera.getViewPosPic(modelpos, shipTexture);
             Vector2 maxPos = new Vector2(windowWidth, windowHeight);
             PlayerSimulation ps = new PlayerSimulation();
             this.position = ps.isCollidingWithBorders(this.position, maxPos, shipTexture, sbv);

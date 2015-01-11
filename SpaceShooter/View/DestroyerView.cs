@@ -19,7 +19,6 @@ namespace SpaceShooter.View
 
             foreach (Bullet bullet in bulletList)
             {
-
                 bv.Draw(spriteBatch, bullet.position);
             }
         }

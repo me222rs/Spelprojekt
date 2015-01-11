@@ -9,9 +9,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooter.Model
 {
-    /// <summary>
-    /// Denna klass är ett objekt av typen kula som även ritar ut kulan(utritning borde ligga i någon vy istället)
-    /// </summary>
     public class Bullet
     {
         public Rectangle bulletHitBox;
@@ -20,7 +17,8 @@ namespace SpaceShooter.Model
         public Vector2 position;
         public bool isVisible;
         public float speed;
-
+        
+        //Sätter kulans hastighet och textur
         public Bullet(Texture2D newBullet) {
             speed = 7;
             bullet = newBullet;

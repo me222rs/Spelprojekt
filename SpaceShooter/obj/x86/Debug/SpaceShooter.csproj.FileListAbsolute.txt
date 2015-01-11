@@ -26,10 +26,8 @@ C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\obj\x86\Debug\SpaceSho
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Icon.ico
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\ship.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\space.png
-C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\asteroid.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\playerbullet.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\healthbar.png
-C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\enemyship.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\MyFont.xnb
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\explosion.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\explosion3.png
@@ -41,11 +39,13 @@ C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Cont
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\epic1.wav
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\explode.wav
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\playershoot.wav
-C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\theme.mp3
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\fire2.xnb
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\Menu.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\GameOver.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\Pause.png
 C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\pulse.xnb
-C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\boom1.xnb
-C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\bgmusic.xnb
+C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\space2.png
+C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\space3.png
+C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\Level.png
+C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\Win.png
+C:\Users\Mikael\Documents\GitHub\Spelprojekt\SpaceShooter\bin\Windows\Debug\Content\Instructions.png

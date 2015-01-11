@@ -19,10 +19,7 @@ namespace SpaceShooter.View
 
             if (isVisible)
             {
-
-                //spriteBatch.Begin();
                 spriteBatch.Draw(meteorTexture, position, null, Color.White);
-                //spriteBatch.End();
             }
         }
     }

@@ -38,7 +38,6 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Model\Bullet.cs" />
     <Compile Include="Model\BulletSimulation.cs" />
-    <Compile Include="Model\Collision.cs" />
     <Compile Include="Model\DestroyerModel.cs" />
     <Compile Include="Model\EnemyModel.cs" />
     <Compile Include="Model\Meteor.cs" />
@@ -50,15 +49,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\BulletView.cs" />
     <Compile Include="View\Camera.cs" />
-    <Compile Include="View\Destroyer.cs" />
     <Compile Include="View\DestroyerView.cs" />
-    <Compile Include="View\EnemyView.cs" />
     <Compile Include="View\EnemyView2.cs" />
     <Compile Include="View\Explosion.cs" />
     <Compile Include="View\HeadsUpDisplay.cs" />
-    <Compile Include="View\MeteorView.cs" />
     <Compile Include="View\MeteorView2.cs" />
-    <Compile Include="View\PlayerView.cs" />
     <Compile Include="View\PlayerView2.cs" />
     <Compile Include="View\Sound.cs" />
     <Compile Include="View\SpaceBackgroundView.cs" />
@@ -71,16 +66,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\asteroid.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\enemyBlack1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\enemyRed3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\enemyship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\epic1.wav">
@@ -99,6 +88,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\healthbar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Instructions.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Level.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Menu.png">
@@ -128,7 +123,13 @@
     <Content Include="Content\space.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\theme.mp3">
+    <Content Include="Content\space2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\space3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Win.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico">
@@ -139,12 +140,6 @@
     <Folder Include="Controller\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\bgmusic.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\boom1.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Content\MyFont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

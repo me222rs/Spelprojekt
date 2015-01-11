@@ -14,15 +14,16 @@ namespace SpaceShooter.Model
         public Texture2D meteorTexture;
         public Vector2 position;
         public Vector2 origin;
-        public float speed;
-        public Rectangle meteorHitBox;
-        private int width;
-        private int height;
         Meteor meteor;
         Camera camera;
-
-        public bool isVisible;
+        public Rectangle meteorHitBox;
         Random random = new Random();
+        private int width;
+        private int height;
+
+        public float speed;
+        public bool isVisible;
+        
         public float randomX;
         public float randomY;
 
@@ -38,7 +39,6 @@ namespace SpaceShooter.Model
             this.position = new Vector2(meteor.Xpos * camera.getScale(), -meteor.Ypos * camera.getScale());
             this.meteorTexture = null;
             this.speed = camera.getScale() * meteor.speed;
-            //ms = new MeteorSimulation(width, height);
             meteorTexture = newTexture;
             position = newPosition;
 
@@ -51,9 +51,9 @@ namespace SpaceShooter.Model
         public void LoadContent(ContentManager content)
         {
 
-
             this.meteorTexture = content.Load<Texture2D>("asteroid");
             //Mitten på meteoren
+            //Skulle ha använts till att få meteoren att rotera, men det uppstod vissa problem så jag fick skita i det
             this.origin.X = meteorTexture.Width / 2;
             this.origin.Y = meteorTexture.Height / 2;
 
@@ -61,7 +61,7 @@ namespace SpaceShooter.Model
 
         public void Update(GameTime gameTime)
         {
-            this.meteorHitBox = new Rectangle((int)position.X, (int)position.Y, 45, 45);
+            this.meteorHitBox = new Rectangle((int)position.X, (int)position.Y, meteorTexture.Width, meteorTexture.Height);
 
             //Respawnar 50 pixlar utanför kameran ifall meteoren når botten
             this.position.Y = position.Y + speed;

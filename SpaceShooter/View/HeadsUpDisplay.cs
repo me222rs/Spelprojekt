@@ -19,8 +19,7 @@ namespace SpaceShooter.View
         
 
         //Tydligen så har inte Monogame fullt stöd för spritefonts. 
-        //Hittade att man kunde ladda ned ett projekt som gjorde om
-        //en xna spritefont till en xnb fil så att monogame kan använda den.
+        //Hittade en färdig spritefont-fil som är klar att användas
         //https://www.youtube.com/watch?v=BwtQn02oy6A
 
         public SpriteFont spriteFont;
@@ -35,8 +34,6 @@ namespace SpaceShooter.View
         public HeadsUpDisplay(int level) {
             score = 0;
             hudIsVisible = true;
-            height = 650;
-            width = 500;
             spriteFont = null;
             hpPosition = new Vector2(0, 25);
             scorePosition = new Vector2(0, 50);

@@ -47,20 +47,6 @@ namespace SpaceShooter.View
                 scale = scaleY;
             }
         }
-
-        public Vector2 getViewPosPic(Vector2 modelpos, Texture2D a_texture)
-        {
-
-            float textureWidth = a_texture.Width / scale;
-            float textureHeight = a_texture.Height / (scale + scaleDiff);
-
-            float vx = scale * (modelpos.X - textureWidth);
-            float vy = (scale + scaleDiff) * (modelpos.Y - textureHeight);
-
-            return new Vector2(vx, vy);
-
-        }
-
         public float getScale()
         {
             return scale;
