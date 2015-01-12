@@ -418,6 +418,18 @@ namespace SpaceShooter
                     KeyboardState kState = Keyboard.GetState();
                     if (kState.IsKeyDown(Keys.Enter)) {
                         gameState = State.Play;
+                        playerModel.health = 200;
+                        hud.score = 0;
+                        enemyList.Clear();
+                        meteorList.Clear();
+                        destroyerList.Clear();
+                        playerModel.bulletList.Clear();
+                        //Spawnar spelarens skepp långt ner på skärmen så att en krash inte sker direkt
+                        playerModel.position.Y = graphics.PreferredBackBufferHeight + 100;
+                        playerModel.position.X = graphics.PreferredBackBufferWidth / 2;
+                        hud.time = 1800;
+                        level = 1;
+                        hud.level = 1;
                     }
                     break;
                 }
@@ -454,6 +466,10 @@ namespace SpaceShooter
                     if (kState.IsKeyDown(Keys.Enter))
                     {
                         gameState = State.Play;
+                    }
+                    if (kState.IsKeyDown(Keys.Space))
+                    {
+                        gameState = State.Menu;
                     }
                     break;
                 }
@@ -547,6 +563,7 @@ namespace SpaceShooter
                     Color.White, 0, Vector2.Zero,
                     SpriteEffects.None, 0);
 
+                    hud.DrawInstructions(spriteBatch);
                     GraphicsDevice.Clear(Color.Black);
                     break;
                 }
@@ -569,7 +586,7 @@ namespace SpaceShooter
                     windowWidth, windowHeight), null,
                     Color.White, 0, Vector2.Zero,
                     SpriteEffects.None, 0);
-
+                    hud.DrawPause(spriteBatch);
                     GraphicsDevice.Clear(Color.Blue);
                     break;
                 }

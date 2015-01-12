@@ -30,6 +30,8 @@ namespace SpaceShooter.View
         public Vector2 levelPosition;
         public Vector2 timePosition;
         public Vector2 finalScorePosition;
+        public Vector2 instructionsPosition;
+        public Vector2 pausePosition;
 
         public HeadsUpDisplay(int level) {
             score = 0;
@@ -39,8 +41,10 @@ namespace SpaceShooter.View
             scorePosition = new Vector2(0, 50);
             levelPosition = new Vector2(0, 75);
             timePosition = new Vector2(0, 100);
+            instructionsPosition = new Vector2(120, 500);
             this.level = level;
             finalScorePosition = new Vector2(200, 300);
+            pausePosition = new Vector2(200, 300);
         }
         
         public void LoadContent(ContentManager Content) {
@@ -59,6 +63,14 @@ namespace SpaceShooter.View
 
         public void DrawScore(SpriteBatch spritebatch) {
             spritebatch.DrawString(spriteFont, "Your score was " + score, finalScorePosition, Color.White);
+        }
+        public void DrawInstructions(SpriteBatch spritebatch)
+        {
+            spritebatch.DrawString(spriteFont, "Press P to pause the game at any time! Except for now... \n Ragequit button is Escape and it will close the game!", instructionsPosition, Color.White);
+        }
+        public void DrawPause(SpriteBatch spritebatch)
+        {
+            spritebatch.DrawString(spriteFont, "Press space to go to the menu and restart the game!", instructionsPosition, Color.White);
         }
 
         public void Draw(SpriteBatch spritebatch)

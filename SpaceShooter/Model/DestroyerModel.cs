@@ -37,7 +37,7 @@ namespace SpaceShooter.Model
             health = 200;
             currentDifficultyLevel = 1;
             setBulletDelay = 20;
-            bulletDelay = 20;
+            bulletDelay = 15;
             isVisible = true;
             bv = new BulletView(bulletTexture);
             position = newPosition;
@@ -65,6 +65,7 @@ namespace SpaceShooter.Model
 
             if (position.Y >= viewPort.Height)
             {
+                health = 200;
                 position.Y = -75;
                 position.X = randomX.Next(enemyTexture.Width, viewPort.Width);
             }
